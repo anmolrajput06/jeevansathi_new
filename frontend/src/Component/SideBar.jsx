@@ -23,83 +23,88 @@ const routes = [
     name: "Dashboard",
     icon: <FaHome />,
   },
+  // {
+  //   className: 'pointer',
+  //   path: "/Employees",
+  //   name: "Employees",
+  //   icon: <HiUserGroup />,
+  //   exact: true,
+  //   subRoutes: [
+  //     // {
+  //     //   path: "/employee/profile",
+  //     //   name: "Add Employee",
+  //     //   icon: <AiOutlineUsergroupAdd />,
+  //     // },
+  //     {
+  //       path: "/Users",
+  //       name: "Manage Employee",
+  //       icon: <MdOutlineManageAccounts />,
+  //     },
+  //   ],
+  // },
   {
-    className: 'pointer',
-    path: "/Employees",
-    name: "Employees",
-    icon: <HiUserGroup />,
-    exact: true,
-    subRoutes: [
-      {
-        path: "/employee/profile",
-        name: "Add Employee",
-        icon: <AiOutlineUsergroupAdd />,
-      },
-      {
-        path: "/Users",
-        name: "Manage Employee",
-        icon: <MdOutlineManageAccounts />,
-      },
-    ],
+    path: "/Users",
+    // name: "Manage Employee",
+    // icon: <MdOutlineManageAccounts />,
   },
-  {
-    path: "/employee/leavedetails",
-    name: "Leaves",
-    icon: <FaCalendarCheck />,
-    subRoutes: [
-      {
-        path: "/employee/leave",
-        name: "Add Leave",
-        icon: <FaClipboardList />,
-      },
-      {
-        path: "/employee/leavedetails",
-        name: "Manage leaves",
-        icon: <FaClipboard />,
+  // {
+  //   path: "/employee/leavedetails",
+  //   name: "Leaves",
+  //   icon: <FaCalendarCheck />,
+  //   subRoutes: [
+  //     {
+  //       path: "/employee/leave",
+  //       name: "Add Leave",
+  //       icon: <FaClipboardList />,
+  //     },
+  //     {
+  //       path: "/employee/leavedetails",
+  //       name: "Manage leaves",
+  //       icon: <FaClipboard />,
 
-      },
-      {
-        path: "/TotalPresent",
-        name: "Today Absent",
-        icon: <GiConcentricCrescents />,
-      },
-      {
-        path: "/YesterdayApsent",
-        name: "Yesterday Absent",
-        icon: <SiIconfinder />,
-      },
-    ],
-  },
+  //     },
+  //     {
+  //       path: "/TotalPresent",
+  //       name: "Today Absent",
+  //       icon: <GiConcentricCrescents />,
+  //     },
+  //     {
+  //       path: "/YesterdayApsent",
+  //       name: "Yesterday Absent",
+  //       icon: <SiIconfinder />,
+  //     },
+  //   ],
+  // },
 
-  {
-    path: "/holiydays",
-    name: "Holidays",
-    icon: <GiConcentrationOrb />,
-    // icon :<TfiThemifyFaviconAlt/>
-  },
-  {
-    path: "/year_leavedetails",
-    name: "Year Leave",
-    icon: <GiImbricatedArrows />,
-    subRoutes: [
-      {
-        path: "/Year_leave",
-        name: "Add Year Leave",
-        icon: <GiRapidshareArrow />,
-      },
-      {
-        path: "/year_leavedetails",
-        name: "Manage Year Leave",
-        icon: <GiThreeLeaves />,
-      },
+  // {
+  //   path: "/holiydays",
+  //   name: "Holidays",
+  //   icon: <GiConcentrationOrb />,
+  //   // icon :<TfiThemifyFaviconAlt/>
+  // },
+  // {
+  //   path: "/year_leavedetails",
+  //   name: "Year Leave",
+  //   icon: <GiImbricatedArrows />,
+  //   subRoutes: [
+  //     {
+  //       path: "/Year_leave",
+  //       name: "Add Year Leave",
+  //       icon: <GiRapidshareArrow />,
+  //     },
+  //     {
+  //       path: "/year_leavedetails",
+  //       name: "Manage Year Leave",
+  //       icon: <GiThreeLeaves />,
+  //     },
 
-    ],
-  },
-  {
-    path: "/change_password",
-    name: "Change_password",
-    icon: <RiLockPasswordFill />
-  },
+  //   ],
+  // },
+  // {
+  //   path: "/change_password",
+  //   name: "Change_password",
+  //   icon: <RiLockPasswordFill />
+  // },
   {
     path: "/Logout",
     name: "Logout",

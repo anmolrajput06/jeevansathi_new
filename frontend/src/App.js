@@ -10,7 +10,7 @@ import LoginScreen from "./Component/Loginscreen";
 import Dashboard from "./Component/Dashboard";
 import SideBar from './Component/SideBar';
 import Logout from './Component/Logout';
-
+import User from './Component/Users'
 function App() {
   const token = localStorage.getItem("token");
 
@@ -20,19 +20,19 @@ function App() {
   };
   return (
     <Router>
-    {!token ? (
-      <LoginScreen onLogin={handleLogin} />
-    ) : (
-      <SideBar>
-        <Routes>
-          
-          <Route path="/" element={<Dashboard />} />
-          <Route path='/Logout' element={<Logout/>} />
-        
-        </Routes>
-      </SideBar>
-    )}
-  </Router>
+      {!token ? (
+        <LoginScreen onLogin={handleLogin} />
+      ) : (
+        <SideBar>
+          <Routes>
+
+            <Route path="/" element={<Dashboard />} />
+            <Route path='/Logout' element={<Logout />} />
+            <Route path='/Users' element={<User />} />
+          </Routes>
+        </SideBar>
+      )}
+    </Router>
   );
 }
 
