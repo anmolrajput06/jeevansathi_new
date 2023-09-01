@@ -10,6 +10,7 @@ const List= require('./routes/list.route')
 const Event= require('./routes/Event.route')
 // Load environment variables from .env file
 dotenv.config();
+const bodyParser = require('body-parser');
 
 // Create Express app
 const app = express();

@@ -10,6 +10,8 @@ const EventForm = () => {
   const [from_date, setFrom_date] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
   const [person_name, setPerson_name] = useState("");
+  const [Contact, setContact] = useState("");
+
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +35,8 @@ const EventForm = () => {
     To_Date: to_Date,
     from_date: from_date,
     banner_image: bannerImage,
-    person_name,person_name
+    person_name:person_name,
+    Contact:Contact
     // Add other properties if needed
   };
 
@@ -89,6 +92,15 @@ const EventForm = () => {
           />
         </div>
 
+        {/* <div className="form-group">
+          <label htmlFor="Title">Contact:</label>
+          <input
+            type="number"
+            placeholder="Enter Contact"
+            value={Contact}
+            onChange={(event) => setContact(event.target.value)}
+          />
+        </div> */}
         <div className="form-group">
           <label htmlFor="description">Description:</label>
           <textarea

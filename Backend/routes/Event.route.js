@@ -4,5 +4,6 @@ const router = express.Router();
 
 router.post('/CreateEvent', EventController.EventCreate);
 router.get('/GetEvent',EventController.GetEvent)
+router.post('/DeleteEvent/:id',EventController.DeleteEvent)
 module.exports = router;
     

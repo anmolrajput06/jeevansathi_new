@@ -19,7 +19,7 @@ const EventDataTable = () => {
     navigate("/employee/salary" + _id);
   };
   const LoadEdit = (_id) => {
-    navigate("/employee/EmpEdit" + _id);
+    navigate("/EventDataTable" + _id);
   };
   useEffect(() => {
   
