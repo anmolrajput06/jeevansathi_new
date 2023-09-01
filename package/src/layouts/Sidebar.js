@@ -10,7 +10,7 @@ const navigation = [
   },
   {
     title: "Event",
-    href: "/alerts",
+    href: "/EventForm",
     icon: "bi bi-bell",
   },
   // {
@@ -28,11 +28,11 @@ const navigation = [
   //   href: "/cards",
   //   icon: "bi bi-card-text",
   // },
-  // {
-  //   title: "Grid",
-  //   href: "/grid",
-  //   icon: "bi bi-columns",
-  // },
+  {
+    title: "Event_List",
+    href: "/EventDataTable",
+    icon: "bi bi-columns",
+  },
   {
     title: "User",
     href: "/table",

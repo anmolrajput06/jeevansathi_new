@@ -11,7 +11,7 @@ const About = lazy(() => import("../views/About.js"));
 const EventForm = lazy(() => import("../views/ui/EventForm.js"));
 const Badges = lazy(() => import("../views/ui/Badges"));
 const Buttons = lazy(() => import("../views/ui/Buttons"));
-const Cards = lazy(() => import("../views/ui/Cards"));
+const EventDataTable = lazy(() => import("../views/ui/EventDataTable.js"));
 const Grid = lazy(() => import("../views/ui/Grid"));
 const Tables = lazy(() => import("../views/ui/Tables"));
 const Forms = lazy(() => import("../views/ui/Forms"));
@@ -29,10 +29,10 @@ const ThemeRoutes = [
       { path: "/", element: <Navigate to="/login" /> },
       { path: "/starter", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
-      { path: "/alerts", exact: true, element: <EventForm /> },
+      { path: "/EventForm", exact: true, element: <EventForm /> },
       { path: "/badges", exact: true, element: <Badges /> },
       { path: "/buttons", exact: true, element: <Buttons /> },
-      { path: "/cards", exact: true, element: <Cards /> },
+      { path: "/EventDataTable", exact: true, element: <EventDataTable /> },
       { path: "/grid", exact: true, element: <Grid /> },
       { path: "/table", exact: true, element: <Tables /> },
       { path: "/forms", exact: true, element: <Forms /> },
