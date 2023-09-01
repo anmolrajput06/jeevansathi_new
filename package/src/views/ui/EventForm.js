@@ -10,8 +10,10 @@ const EventForm = () => {
   const [from_date, setFrom_date] = useState("");
   const [bannerImage, setBannerImage] = useState(null);
   const [person_name, setPerson_name] = useState("");
-  const [Contact, setContact] = useState("");
+  const [Contact_no, setContact_no] = useState("");
 
+  const [Contact, setContact] = useState("");
+// console.log("bannerImage =>",bannerImage);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +29,19 @@ const EventForm = () => {
   }
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0]; // Assuming you're uploading a single file
-    setBannerImage(selectedFile); // Store the selected file in the state variable
+    const file = e.target.files[0];
+    
+    if (file) {
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        // Base64 encoded image data
+        const base64Image = e.target.result;
+        setBannerImage(base64Image);
+      };
+      
+      reader.readAsDataURL(file);
+    }
   };
   const formData = {
     Title: title,
@@ -36,7 +50,8 @@ const EventForm = () => {
     from_date: from_date,
     banner_image: bannerImage,
     person_name:person_name,
-    Contact:Contact
+    Contact:Contact_no,
+    banerImg:bannerImage
     // Add other properties if needed
   };
 
@@ -80,7 +95,15 @@ const EventForm = () => {
             onChange={(event) => setPerson_name(event.target.value)}
           />
         </div>
-
+        <div className="form-group">
+          <label htmlFor="Title">Contact No:</label>
+          <input
+            type="text"
+            placeholder="Enter Contact No:"
+            value={Contact_no}
+            onChange={(event) => setContact_no(event.target.value)}
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="Title">Title:</label>
           {/* <input type="text" id="Title" name="Title" /> */}
@@ -138,16 +161,15 @@ const EventForm = () => {
 
         <div className="form-group">
           <label htmlFor="banner_image">Banner Image:</label>
-          {/* <input
+          <input
             type="file"
             id="banner_image"
             name="banner_image"
             onChange={handleFileInputChange}
-          /> */}
+          />
           
 
 
-      <input type="file" id="banner_image" name="banner_image" />
         </div>
 
         <button type="submit">Create Event</button>

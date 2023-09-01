@@ -7,6 +7,9 @@ import { AiFillDelete } from 'react-icons/ai';
 
 import { CgMoreO } from "react-icons/cg";
 import { TiArrowBack } from "react-icons/ti";
+
+// import TopCards from "../../components/dashboard/TopCards";
+
 const EventDataTable = () => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -58,6 +61,16 @@ const EventDataTable = () => {
   // "person_name": "ammol",
   // "Contact": 79685968,
   var columns = [
+    {
+      name: "img",
+      cell: (row) => (
+        <>
+          {/* <img src={row.banner_image} alt="Image" /> */}
+          
+       
+        </>
+      ),
+    },
     {
       name: "person_name",
       selector: (rowData) => rowData["person_name"],
