@@ -32,7 +32,8 @@ async function signUp(req, res) {
       physically_challenge,
       about_your_future_career,
       picture,
-      status
+      status,
+      active
     } = req.body;
     if (status === "1") {
       const existingUser = await User.findOne({ $or: [{ candidates_name }, { email }] });
@@ -91,7 +92,8 @@ async function signUp(req, res) {
           physically_challenge,
           about_your_future_career,
           picture,
-          status: "3"
+          status: "3",
+          active
         }
       };
 
@@ -116,13 +118,11 @@ async function login(req, res) {
 
     // Find user by email
 
-    // console.log(email, password);
     const user = await User.findOne({ email });
     if (!user) {
       return res.send({ message: "user is not exist" })
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
-    // console.log("ooo", password, isPasswordValid);
     if (!isPasswordValid || !user) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
@@ -132,11 +132,6 @@ async function login(req, res) {
     const token = jwt.sign({ userId: user._id,email:user.email,gendar:user.gendar }, process.env.JWT_SECRET, {
       expiresIn: '10d',
     });
-    // console.log(user.gendar);
-    // if (user.gendar == "male") {
-    //   const female = await User.find({ gendar: 'female' })
-    //   res.send(female)
-    // }
 
     res.status(200).json({ message: 'Login successful', token, user });
   
@@ -147,9 +142,7 @@ async function login(req, res) {
   }
 };
 
-async function List(req, res) {
 
-}
 module.exports = {
-  signUp, login, List
+  signUp, login
 };

@@ -7,6 +7,7 @@ const path = require('path');
 const fs = require('fs');
 const signUpRoute = require('./routes/sing.route');
 const List= require('./routes/list.route')
+const Event= require('./routes/Event.route')
 // Load environment variables from .env file
 dotenv.config();
 
@@ -29,20 +30,7 @@ const corsOpts = {
     'Content-Type',
   ],
 };
-if (!fs.existsSync('uploads/')) {
-  fs.mkdirSync('uploads/');
-}
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Specify the directory where images will be stored
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const extension = path.extname(file.originalname);
-    cb(null, file.fieldname + '-' + uniqueSuffix + extension);
-  },
-});
-const upload = multer({ storage: storage });
+
 app.use(cors(corsOpts));
 // Connect to MongoDB using mongoose
 mongoose.connect('mongodb+srv://jeevansathi:123@cluster0.6wzqov2.mongodb.net/jeevansathi', {
@@ -56,13 +44,12 @@ mongoose.connect('mongodb+srv://jeevansathi:123@cluster0.6wzqov2.mongodb.net/jee
   .catch(err => {
     console.error('Error connecting to MongoDB:', err);
   });
+  app.get('/', (req, res) => {
+    res.send('hello')
+  })
 app.use('/auth', signUpRoute); // Assuming the signup route is under '/auth'
-app.get('/', (req, res) => {
-  res.send('hello')
-})
 app.use('/get_List',List)
-app.use(upload.single('image')); // Multer middleware for file upload
-
+app.use('/Event',Event)
 // Start the server
 const port = process.env.PORT || 3002;
 app.listen(port, () => {

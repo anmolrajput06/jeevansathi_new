@@ -75,10 +75,23 @@ async function getInterests(req, res) {
 
 async function getAllUser(req, res) {
   try {
-  
-    const AllUser = await User.find({  });
+
+    const AllUser = await User.find({});
     console.log(AllUser, 'AllUser');
     res.status(200).json(AllUser);
+  } catch (error) {
+    console.log('Error:', error);
+    res.status(500).send({ message: 'Server error' });
+  }
+}
+async function get_particularUser(req, res) {
+  console.log('user get api call');   
+  try {
+
+    const {userId} = req.body
+    // Fetch interests for the user
+    const user = await User.findOne({ _id: userId });
+    res.status(200).json(user);
   } catch (error) {
     console.log('Error:', error);
     res.status(500).send({ message: 'Server error' });
@@ -88,5 +101,14 @@ module.exports = {
   List,
   interested,
   getInterests,
-  getAllUser
+  getAllUser,
+  get_particularUser
 };
+
+
+
+
+
+// 4. Event with parameters(Title, descripation,
+//   banner image,To Date, from date, Contact
+//   person name, Contact number) (pending)

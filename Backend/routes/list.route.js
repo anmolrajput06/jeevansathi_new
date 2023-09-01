@@ -7,4 +7,5 @@ router.get('/list', listontroller.List);
 router.post('/intrested',listontroller.interested)
 router.get('/intreted_user',listontroller.getInterests)
 router.get('/getalluser',listontroller.getAllUser)
+router.post('/get_user_id',listontroller.get_particularUser)
 module.exports = router;
