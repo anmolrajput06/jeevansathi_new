@@ -9,7 +9,7 @@ async function List(req, res) {
 
       const token = authHeader.substring(7);
       const verified = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
-      console.log('----', verified.gendar);
+      // console.log('----', verified.gendar);
       if (verified.gendar == "male") {
         const female = await User.find({ gendar: 'female' })
         res.send(female)
@@ -35,12 +35,12 @@ async function interested(req, res) {
       const token = authHeader.substring(7);
       const verified = jwt.verify(token, process.env.JWT_SECRET);
       const { user_id, interested_id } = req.body;
-      console.log(interested_id);
+      // console.log(interested_id);
       const interest = new Intrested_user({
         user_id,
         intresed_id: interested_id,
       });
-      console.log(Intrested_user.intresed_id, 'intresed_id');
+      // console.log(Intrested_user.intresed_id, 'intresed_id');
       const savedInterest = await interest.save();
       // if(userId==verified.userId)
       res.status(201).json(savedInterest);
@@ -77,7 +77,7 @@ async function getAllUser(req, res) {
   try {
 
     const AllUser = await User.find({});
-    console.log(AllUser, 'AllUser');
+    // console.log(AllUser, 'AllUser');
     res.status(200).json(AllUser);
   } catch (error) {
     console.log('Error:', error);

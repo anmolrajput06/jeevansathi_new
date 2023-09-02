@@ -14,19 +14,19 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { Link,useParams ,useLocation } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TiArrowBack } from "react-icons/ti";
 import { FaTrash } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
-
 const Forms = (props) => {
-   let effective_lastIndex;
-   const location = useLocation();
+  let effective_lastIndex;
+  const location = useLocation();
 
-   console.log(location,'location');
+  const userId  = useParams();
+console.log("userId",userId.id);
   //  const id = location.state._id;
   //  console.log(id,'44444444444');
   if (props.data) {
@@ -53,30 +53,51 @@ const Forms = (props) => {
 
 
   const handleGetUser = (event) => {
-    // handle login logic here
-    // event.preventDefault();
-    axios
-      .post('http://localhost:3002/get_List//get_user_id')
-        .then((res) => {
-            
-            console.log("response", res,'0000000');
-            if (res.data) {
-              setFields(res.data)
-            }
-            else {
-                // setShowError(true);
-            }
-        })
-        .catch((err) => {
-            console.log("Error", err);
-            // setShowError(true);
-        });
-};
+
+    let data = {
+      "userId": userId.id
+    };
+    console.log("data", data);
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:3002/get_List/get_user_id',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+
+    // axios.post('http://localhost:3002/get_List/get_user_id',formData)
+    //   .then((res) => {
+
+    //     console.log("response", res);
+    //     if (res.data) {
+    //       setFields(res.data)
+    //     }
+    //     else {
+    //       // setShowError(true);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error", err);
+    //     // setShowError(true);
+    //   });
+  };
 
   useEffect(() => {
 
     handleGetUser();
- 
+
     console.warn('fields--------', fields,);
     console.warn(propsObject?.gender == "Male", '================================');
   }, [propsObject]);
@@ -127,29 +148,7 @@ const Forms = (props) => {
     console.log("finalData", finalData);
     const validationErrors = (fields, true);
     setErrors(validationErrors.errObj);
-    // if (validationErrors && validationErrors.formIsValid) {
-    //   setSubmitDisable(true);
-    //   axios
-    //     .post(`http//:localhost/emp/update/` + props.data._id, finalData)
-    //     .then((response) => {
-    //       console.log("success", response);
-    //       if (response.data.message == "updated successfully.") {
-    //         Swal.fire({
-    //           icon: "success",
-    //           title: "Successful",
-    //           text: "Employee Successfully Updated!",
-    //         }).then(() => {
-    //           navigate("/employee/manageprofile");
-    //         });
-    //       } else {
-    //         setSubmitDisable(false)
-    //         notify(response.data.message);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error("There was an error!", error);
-    //     });
-    // }
+
   }
 
 
@@ -700,8 +699,8 @@ const Forms = (props) => {
                     type="submit"
                     value="Submit"
                     className="col-lg-6 col-md-6 col-sm-6 col-xs-6 my-3 btn btn-success"
-                    // onClick={(e) => submituserRegistrationForm(e)}
-                    // onClick={()=>{handleGetUser()}}
+                  // onClick={(e) => submituserRegistrationForm(e)}
+                  // onClick={()=>{handleGetUser()}}
                   />
                 )}
               </div>

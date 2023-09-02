@@ -118,7 +118,7 @@ const ProjectTables = () => {
                     </div>
                   </td>
                   <td>{tdata.city}</td>
-                  {console.log(tdata._id)}
+                  {/* {console.log(tdata._id)} */}
                   <td>
                     {tdata.active === false ? (
                       <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
@@ -130,10 +130,12 @@ const ProjectTables = () => {
                   </td>
                   <td>{tdata.father_name}</td>
                   {/* <td>{tdata.father_occupation}</td> */}
-                  <td > 
-                  <Link to="/forms">
-                    <BiShow /> {/* Clicking the icon will navigate to the forms page */}
-                  </Link></td>
+                  <td >
+                    {/* <Link to="/forms">
+                   */}
+                    <Link to={`/forms/:${tdata._id}`}>
+                      <BiShow /> {/* Clicking the icon will navigate to the forms page */}
+                    </Link></td>
                 </tr>
               ))}
             </tbody>

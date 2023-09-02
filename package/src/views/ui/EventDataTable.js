@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { AiFillDelete } from 'react-icons/ai';
-
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import { CgMoreO } from "react-icons/cg";
 import { TiArrowBack } from "react-icons/ti";
 
@@ -21,8 +22,24 @@ const EventDataTable = () => {
   const generateSalary = (_id) => {
     navigate("/employee/salary" + _id);
   };
-  const LoadEdit = (_id) => {
-    navigate("/EventDataTable" + _id);
+  const deleteUser =async (_id) => {
+    
+    const formData = {
+     id:_id
+    };
+  
+    const response = await axios.post('http://localhost:3002/Event/DeleteEvent', formData);
+    console.log("response",response);
+    Swal.fire({
+      icon: 'success',
+      title: 'Event Created',
+      text: 'Your event has been successfully created.',
+    }).then(() => {
+      // After the SweetAlert is closed, redirect to another page
+      navigate('/EventDataTable');
+      // Replace '/another-page' with your desired route
+    });
+
   };
   useEffect(() => {
   
@@ -119,7 +136,7 @@ const EventDataTable = () => {
           <span
             className="btn btn-md"
             onClick={() => {
-              LoadEdit(row._id);
+              deleteUser(row._id);
             }}
           >
             <AiFillDelete />
@@ -132,7 +149,7 @@ const EventDataTable = () => {
     },
   ];
   var filteredData = empdata.filter((row) => {
-    console.log(filteredData,'filteredData');
+    // console.log(filteredData,'filteredData');
     return (
       row.person_name ||
       row.Title ||

@@ -38,7 +38,7 @@ async function EventCreate(req, res) {
 async function GetEvent(req, res) {
   try {
     const Allevent = await Event.find({});
-    console.log(Allevent, 'Allevent');
+    // console.log(Allevent, 'Allevent');
     res.status(200).json(Allevent);
   } catch (error) {
     console.error('Error registering user:', error);
@@ -47,9 +47,9 @@ async function GetEvent(req, res) {
 }
 async function DeleteEvent(req, res) {
   try {
-    const eventId = req.params.id;
-  const EventDelete=  await Event.findByIdAndDelete(eventId)
-  return  res.status(204).json({ message: 'Event deleted successfully',"data":EventDelete });
+    const eventId = req.body.id;
+    const EventDelete = await Event.findByIdAndDelete(eventId)
+    return res.status(204).send({ message: 'Event deleted successfully', "data": EventDelete });
   } catch (error) {
 
     console.error(error);
