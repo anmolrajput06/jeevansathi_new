@@ -33,7 +33,7 @@ const EventDataTable = () => {
     Swal.fire({
       icon: 'success',
       title: 'Event Created',
-      text: 'Your event has been successfully created.',
+      text: 'Your event has been successfully deleted.',
     }).then(() => {
       // After the SweetAlert is closed, redirect to another page
       navigate('/EventDataTable');
@@ -77,13 +77,26 @@ const EventDataTable = () => {
   // "from_date": "2023-09-08T18:30:00.000Z",
   // "person_name": "ammol",
   // "Contact": 79685968,
+  const bufferToDataURL = (buffer) => {
+    const arrayBufferView = new Uint8Array(buffer.data);
+    const blob = new Blob([arrayBufferView], { type: "image/jpeg" }); // Change the type based on your image format
+    const urlCreator = window.URL || window.webkitURL;
+    return urlCreator.createObjectURL(blob);
+  };
+
   var columns = [
     {
       name: "img",
       cell: (row) => (
         <>
           {/* <img src={row.banner_image} alt="Image" /> */}
-          
+          {/* {row.banner_image && ( */}
+            <img
+              src={row.banner_image} // Use the function to convert buffer to data URL
+              alt="Image"
+              style={{ maxWidth: "100px" }} // Adjust the style as needed
+            />
+          {/* )} */}
        
         </>
       ),

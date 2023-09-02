@@ -18,6 +18,7 @@ const Forms = lazy(() => import("../views/ui/Forms"));
 const Breadcrumbs = lazy(() => import("../views/ui/Breadcrumbs"));
 const Login=lazy(()=>import("../auth/Login.js"))
 const UserDetails = lazy(()=>import("../"))
+const UserDetail = lazy(()=> import("../views/ui/UserDetail.js"))
 /*****Routes******/
 
 const ThemeRoutes = [
@@ -37,6 +38,7 @@ const ThemeRoutes = [
       { path: "/table", exact: true, element: <Tables /> },
       { path: "/forms/:id", exact: true, element: <Forms /> },
       { path: "/breadcrumbs", exact: true, element: <Breadcrumbs /> },
+      { path: "/userdetails/:id", exact: true, element: <UserDetail /> },
      
     ],
   },

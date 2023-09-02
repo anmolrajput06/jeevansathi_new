@@ -8,6 +8,7 @@ const fs = require('fs');
 const signUpRoute = require('./routes/sing.route');
 const List= require('./routes/list.route')
 const Event= require('./routes/Event.route')
+const Contact = require('./routes/Contact.route')
 // Load environment variables from .env file
 dotenv.config();
 const bodyParser = require('body-parser');
@@ -51,6 +52,7 @@ mongoose.connect('mongodb+srv://jeevansathi:123@cluster0.6wzqov2.mongodb.net/jee
 app.use('/auth', signUpRoute); // Assuming the signup route is under '/auth'
 app.use('/get_List',List)
 app.use('/Event',Event)
+app.use('/contact',Contact)
 // Start the server
 const port = process.env.PORT || 3002;
 app.listen(port, () => {

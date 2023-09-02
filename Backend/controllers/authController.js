@@ -33,7 +33,8 @@ async function signUp(req, res) {
       about_your_future_career,
       picture,
       status,
-      active
+      active,
+      hide
     } = req.body;
     if (status === "1") {
       const existingUser = await User.findOne({ $or: [{ candidates_name }, { email }] });
@@ -93,7 +94,8 @@ async function signUp(req, res) {
           about_your_future_career,
           picture,
           status: "3",
-          active
+          active,
+          hide
         }
       };
 

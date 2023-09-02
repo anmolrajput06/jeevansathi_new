@@ -133,7 +133,8 @@ const ProjectTables = () => {
                   <td >
                     {/* <Link to="/forms">
                    */}
-                    <Link to={`/forms/:${tdata._id}`}>
+                    {/* <Link to={`/forms/${tdata._id}`}> */}
+                    <Link to={`/userdetails/${tdata._id}`}>
                       <BiShow /> {/* Clicking the icon will navigate to the forms page */}
                     </Link></td>
                 </tr>

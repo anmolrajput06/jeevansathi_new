@@ -1,6 +1,6 @@
 import ProjectTables from "../../components/dashboard/ProjectTable";
 import { Row, Col, Table, Card, CardTitle, CardBody } from "reactstrap";
-
+import ImageSlider from "./ImageSlider";
 const Tables = () => {
   return (
     <Row>
@@ -10,11 +10,11 @@ const Tables = () => {
       <Col lg="12">
         <ProjectTables />
       </Col>
+
       {/* --------------------------------------------------------------------------------*/}
       {/* table-2*/}
       {/* --------------------------------------------------------------------------------*/}
       <Col lg="12">
-      
       </Col>
       {/* --------------------------------------------------------------------------------*/}
       {/* table-3*/}

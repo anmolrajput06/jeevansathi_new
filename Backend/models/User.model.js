@@ -128,6 +128,10 @@ const userSchema = new mongoose.Schema({
     default:null
 
   },
+hide : {
+   type : Number,
+   default : 0
+},
   pictures: {
     type: Buffer
 

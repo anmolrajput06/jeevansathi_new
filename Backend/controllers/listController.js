@@ -75,9 +75,11 @@ async function getInterests(req, res) {
 
 async function getAllUser(req, res) {
   try {
-
-    const AllUser = await User.find({});
+// let hide =1
+    const AllUser = await User.find({hide:0});
     // console.log(AllUser, 'AllUser');
+    console.log('AllUser',AllUser);
+    
     res.status(200).json(AllUser);
   } catch (error) {
     console.log('Error:', error);

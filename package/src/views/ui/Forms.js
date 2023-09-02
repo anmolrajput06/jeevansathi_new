@@ -55,43 +55,44 @@ console.log("userId",userId.id);
   const handleGetUser = (event) => {
 
     let data = {
-      "userId": userId.id
+      "userId":userId.id
     };
     console.log("data", data);
-    let config = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/get_user_id',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
+    console.log(data.userId=='64ed8b0f9a92b5440f779cb5',data.userId,'64ed8b0f9a92b5440f779cb5');
+//     let config = {
+//       method: 'post',
+//       maxBodyLength: Infinity,
+//       url: 'http://localhost:3002/get_List/get_user_id',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       data: data
+//     };
+// console.log(config,'config');
+//     axios.request(config)
+//       .then((response) => {
+//         console.log(response.data,'0000000000000000000000000');
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
 
-    axios.request(config)
-      .then((response) => {
-        console.log(response.data);
+
+    axios.post('http://localhost:3002/get_List/get_user_id',data)
+      .then((res) => {
+
+        console.log("response", res);
+        if (res.data) {
+          setFields(res.data)
+        }
+        else {
+          // setShowError(true);
+        }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log("Error", err);
+        // setShowError(true);
       });
-
-
-    // axios.post('http://localhost:3002/get_List/get_user_id',formData)
-    //   .then((res) => {
-
-    //     console.log("response", res);
-    //     if (res.data) {
-    //       setFields(res.data)
-    //     }
-    //     else {
-    //       // setShowError(true);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error", err);
-    //     // setShowError(true);
-    //   });
   };
 
   useEffect(() => {
@@ -164,7 +165,7 @@ console.log("userId",userId.id);
 
   return (
     <div className="">
-      <Link to="/employee/manageprofile" className="btn text-dark">
+      <Link to="/table" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <div style={{ display: "flex" }}>
