@@ -23,6 +23,7 @@ async function signUp(req, res) {
       brother,
       status_type,
       city,
+      state,
       native_city,
       address,
       height,
@@ -72,6 +73,7 @@ async function signUp(req, res) {
           status_type,
           brother,
           status: "2",
+          state,
           city,
           native_city,
           address

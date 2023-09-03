@@ -85,6 +85,11 @@ const userSchema = new mongoose.Schema({
     default:null
 
   },
+  state: {
+    type: String,
+    default:null
+
+  },
   native_city: {
     type: String,
     default:null

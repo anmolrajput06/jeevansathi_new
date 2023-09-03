@@ -75,22 +75,23 @@ async function getInterests(req, res) {
 
 async function getAllUser(req, res) {
   try {
-// let hide =1
-    const AllUser = await User.find({hide:0});
+    // let hide =1
+    const AllUser = await User.find({});
     // console.log(AllUser, 'AllUser');
-    console.log('AllUser',AllUser);
-    
+    // console.log('AllUser',AllUser);
+
     res.status(200).json(AllUser);
   } catch (error) {
     console.log('Error:', error);
     res.status(500).send({ message: 'Server error' });
   }
 }
+
 async function get_particularUser(req, res) {
-  console.log('user get api call');   
+  console.log('user get api call');
   try {
 
-    const {userId} = req.body
+    const { userId } = req.body
     // Fetch interests for the user
     const user = await User.findOne({ _id: userId });
     res.status(200).json(user);
@@ -99,18 +100,74 @@ async function get_particularUser(req, res) {
     res.status(500).send({ message: 'Server error' });
   }
 }
+
+
+async function hidestatusUpdate(req, res) {
+
+  try {
+
+    const { user_id, hide_status } = req.body
+
+    // Check if the user exists based on the user_id from the token
+    // const user = await User.findById(user_id);
+    const user = await User.find({ _id: user_id });
+    ;
+
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the hide_status for the user
+    await User.findByIdAndUpdate(
+      user_id, // User's unique ID to identify which user to update
+      { hide: hide_status }, // New hide_status value
+      { new: true } // To return the updated document
+    );
+    const user1 = await User.find({ _id: user_id });
+    console.log(user1);
+    return res.status(201).json({ message: 'Hide status updated successfully' });
+  } catch (error) {
+    console.error('Error:', error);
+    return res.status(401).json({ message: 'Not authenticated' });
+  }
+
+};
+
+
+async function oneUserDelete(req, res) {
+
+    const { user_id } = req.body
+    const user = await User.find({ _id: user_id });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    try {
+      const result = await User.deleteOne({ _id:user_id });
+
+      if (result.deletedCount === 1) {
+        console.log('User deleted successfully');
+    return res.status(201).send({ message: 'User deleted successfully' });
+
+      } else {
+        console.log('User not found');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+
+}
+
+
 module.exports = {
   List,
   interested,
   getInterests,
   getAllUser,
-  get_particularUser
+  get_particularUser,
+  hidestatusUpdate,
+  oneUserDelete
 };
 
-
-
-
-
-// 4. Event with parameters(Title, descripation,
-//   banner image,To Date, from date, Contact
-//   person name, Contact number) (pending)

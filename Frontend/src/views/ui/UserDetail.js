@@ -96,56 +96,17 @@ const UserDetail = () => {
 
 
     return (<>
-         
-        <div className="mt-5 " >
-            {/* <ImageSlider/> */}
 
-            <div className="card">
 
-                {/* {empdata && ( */}
-                <div className="cover-content">
-                    <div
-                        className="card-title float-end"
-                        style={{
-                            marginTop: '-2.5rem',
-                            color: 'rgba(23,31,35,.64)'
-                        }}
-                    >
-                        <div className="flex"
-                        >
-                            <div className="flex">
-                                <Link
-                                    to="/table" className="btn text-primary">
-                                    <TiArrowBack size={30} />
-                                </Link>
-                            </div>
 
-                            <div className="flex">
-                                <button
-                                    className="btn"
-                                    onClick={() => LoadEdit()}
-                                >
-                                    <MdOutlineEditCalendar className="text-primary fs-3" />
-                                </button>
-                                <button
-                                    className="btn"
-                                    onClick={() => Removefunction()}
-                                >
-                                    <MdDelete className="text-danger fs-3" />
-                                </button>
-                            </div>
-                        </div>
-                        {/* <img alt="Profile-Pic" src={img} style={{ width: '9rem' }} className="profile-pic rounded-circle pmd-z-depth-light-2-1 mr-md-4 mr-4" width="180" /> */}
-                    </div>
-                        <div className="d-flex d-flex-row align-items-center">
-                                <ImageSlider/>
-                        </div>
-                </div>
-                {/* )} */}
-            </div>
 
-            {empdata &&(
-                <div className="card">
+        <div className="mt-3" >
+            {/* <div className="card"> */}
+            <ImageSlider />
+            {/* </div> */}
+
+            {empdata && (
+                <div className="card mt-5">
                     <div className="container mt-3">
                         <div className="row view-basic-card">
                             <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Basic Information</h3>
