@@ -72,7 +72,7 @@ const ProjectTables = () => {
   const handleViewAllClick = () => {
     setViewAll(true);
   };
-  
+
   const setToggleSwitch = (e, userData) => {
     console.log("e", e);
     console.log("data", userData);
@@ -183,15 +183,15 @@ const ProjectTables = () => {
                 <th>States</th>
                 <th>City</th>
                 <th>Intrested</th>
-                <th>Hide/Show</th>
+                <th>Hide/ Show</th>
                 <th>Action</th>
 
 
               </tr>
             </thead>
-            
+
             <tbody>
-            
+
               {filteredData.map((tdata, index) =>
               (
 
@@ -287,7 +287,16 @@ const ProjectTables = () => {
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={modalStyles}>
           <h2 style={{ textAlign: 'center' }}> Intrested  List</h2>
           {responseItems.map((item, index) => (
-            <p key={index}>{item.candidates_name}</p>
+            <>
+
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <p key={index} style={{ margin: '0' }}>{item.candidates_name}</p>
+                <Link to={`/userdetails/${item._id}`} style={{ margin: '0' }}>
+                  <BiShow />
+                </Link>
+              </div>
+
+            </>
           ))}
           <button onClick={closeModal} style={buttonStyles}>
             Close
