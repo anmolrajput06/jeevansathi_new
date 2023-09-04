@@ -1,0 +1,18 @@
+/* pagination.css */
+.pagination-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .pagination-custom .previous {
+    order: 2; /* Swap with next button */
+  }
+  
+  .pagination-custom .next {
+    order: 1; /* Swap with previous button */
+  }
+  

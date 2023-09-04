@@ -9,6 +9,7 @@ const signUpRoute = require('./routes/sing.route');
 const List= require('./routes/list.route')
 const Event= require('./routes/Event.route')
 const Contact = require('./routes/Contact.route')
+
 // Load environment variables from .env file
 dotenv.config();
 const bodyParser = require('body-parser');
@@ -34,6 +35,19 @@ const corsOpts = {
 };
 
 app.use(cors(corsOpts));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dest = path.join(__dirname, 'uploads/');
+    cb(null, dest);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
 // Connect to MongoDB using mongoose
 mongoose.connect('mongodb+srv://jeevansathi:123@cluster0.6wzqov2.mongodb.net/jeevansathi', {
   useNewUrlParser: true,          
@@ -49,6 +63,13 @@ mongoose.connect('mongodb+srv://jeevansathi:123@cluster0.6wzqov2.mongodb.net/jee
   app.get('/', (req, res) => {
     res.send('hello')
   })
+  app.post('/upload', upload.array('files', 10), (req, res) => {
+  
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).send('No files uploaded.');
+    }
+    return res.send('Files uploaded successfully.');
+  });
 app.use('/auth', signUpRoute); // Assuming the signup route is under '/auth'
 app.use('/get_List',List)
 app.use('/Event',Event)

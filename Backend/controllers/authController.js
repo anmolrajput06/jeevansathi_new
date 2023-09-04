@@ -84,8 +84,10 @@ async function signUp(req, res) {
       console.log(updateResult.nModified + " document(s) updated");
 
       return res.status(201).json({ status: true, message: 'Updated successfully.', data: 2 });
+      
     } else if (status === "3") {
       const myquery = { email: email };
+      console.log(req.file); // Add this line
       const newvalues = {
         $set: {
           height,
@@ -94,7 +96,8 @@ async function signUp(req, res) {
           professional,
           physically_challenge,
           about_your_future_career,
-          picture,
+          // picture,
+          // picture: req.file.filename,
           status: "3",
           active,
           hide

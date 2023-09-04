@@ -1,5 +1,7 @@
 
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+
 const { User } = require('../models/User.model')
 const { Intrested_user } = require('../models/IntrestedList.model')
 async function List(req, res) {
@@ -55,22 +57,28 @@ async function interested(req, res) {
 }
 async function getInterests(req, res) {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).send({ message: 'Not authenticated' });
-    }
+  const user=req.body
+    const interests = await Intrested_user.find({ user_id: user.user });
+  
+    // Extract the intresed_id values from the interests
+    const intresedIds = interests.map((interest) => interest.intresed_id);
+  
+    // Use aggregation to join data from "user" collection
+    const joinedData = await User.aggregate([
+      {
+        $match: {
+          _id: { $in: intresedIds.map((id) => new mongoose.Types.ObjectId(id)) },
 
-    const token = authHeader.substring(7);
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Fetch interests for the user
-    const interests = await Intrested_user.find({ user_id: verified.user_id });
-
-    res.status(200).json(interests);
+        },
+      },
+    ]);
+  
+    res.status(200).json(joinedData);
   } catch (error) {
     console.log('Error:', error);
     res.status(500).send({ message: 'Server error' });
   }
+  
 }
 
 async function getAllUser(req, res) {
@@ -137,26 +145,26 @@ async function hidestatusUpdate(req, res) {
 
 async function oneUserDelete(req, res) {
 
-    const { user_id } = req.body
-    const user = await User.find({ _id: user_id });
+  const { user_id } = req.body
+  const user = await User.find({ _id: user_id });
 
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  try {
+    const result = await User.deleteOne({ _id: user_id });
+
+    if (result.deletedCount === 1) {
+      console.log('User deleted successfully');
+      return res.status(201).send({ message: 'User deleted successfully' });
+
+    } else {
+      console.log('User not found');
     }
-
-    try {
-      const result = await User.deleteOne({ _id:user_id });
-
-      if (result.deletedCount === 1) {
-        console.log('User deleted successfully');
-    return res.status(201).send({ message: 'User deleted successfully' });
-
-      } else {
-        console.log('User not found');
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
 
 }
 

@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 // import { HiUserGroup } from 'react-icons/hi';
 import { MdOutlineEditCalendar, MdDelete } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
-// import emo from '../../../src/components/Sidebar/download.jpeg';
 import Swal from "sweetalert2";
-// import host from "./../utils"
 import { TiArrowBack } from "react-icons/ti"
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
@@ -16,47 +14,25 @@ const UserDetail = () => {
 
     console.log("id =>", id);
     const [empdata, empdatachange] = useState([]);
-
-    // const leaveNavigate = () => {
-    //   navigate("/employee/userleavedetails" + id);
-    // };
-    //   useEffect(() => {
-    //     axios.post(`http://localhost:3002/get_List/get_user_id` + id)
-    //       .then((res) => {
-    //         return res.json();
-    //       })
-    //       .then((resp) => {
-    //         empdatachange(resp);
-    //         console.log(resp);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err.message);
-    //       });
-    //   }, []);
-    // const leaveNavigate = () => {
-    //   navigate("/employee/userleavedetails" + id);
-    // };
-
-    // const response = await axios.post('http://localhost:3002/get_List/get_user_id', { userId: id });
-    // empdatachange(response.data);
+    const [imageUrl, setImageUrl] = useState("");
+ 
     const handleGetUser = async () => {
         try {
-            // Make the API call using 'id' from the URL
             const response = await axios.post('http://localhost:3002/get_List/get_user_id', { userId: id.id });
-
-            // Update the state with API response data
-            console.log("response.data", response.data);
             empdatachange(response.data);
+
+            // Set the image URL from the response data
+            setImageUrl(response.data.picture); // Assuming 'picture' is the key for the image URL
 
             console.log("API call successful");
         } catch (error) {
             console.error("API call failed:", error.message);
         }
     };
-
     const LoadEdit = () => {
         navigate(`/forms/${id.id}`);
     };
+    console.log(imageUrl,'imageUrl');
     const Removefunction = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -108,6 +84,12 @@ const UserDetail = () => {
             {empdata && (
                 <div className="card mt-5">
                     <div className="container mt-3">
+                    {/* {imageUrl && ( */}
+                                <div className="col-12 col-md-6 col-lg-3">
+                                    <label className="pmd-list-subtitle">Profile Picture</label>
+                                    <img src={imageUrl} alt="Profile" style={{ maxWidth: '100px' }} />
+                                </div>
+                            {/* )} */}
                         <div className="row view-basic-card">
                             <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Basic Information</h3>
                             <div className="col-12 col-md-6 col-lg-3">
@@ -143,6 +125,43 @@ const UserDetail = () => {
                                 <label className="pmd-list-subtitle">Marital Status</label>
                                 <p className="pmd-list-title"><small>{empdata.status_type}</small></p>
                             </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">State</label>
+                                <p className="pmd-list-title"><small>{empdata.state}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Active</label>
+                                <p className="pmd-list-title"><small>{empdata.active}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">City</label>
+                                <p className="pmd-list-title"><small>{empdata.city}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Native City</label>
+                                <p className="pmd-list-title"><small>{empdata.native_city}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Address</label>
+                                <p className="pmd-list-title"><small>{empdata.address}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Education</label>
+                                <p className="pmd-list-title"><small>{empdata.education}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Professional</label>
+                                <p className="pmd-list-title"><small>{empdata.professional}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">Physically Challenge</label>
+                                <p className="pmd-list-title"><small>{empdata.physically_challenge}</small></p>
+                            </div>
+                            <div className="col-12 col-md-6 col-lg-3">
+                                <label className="pmd-list-subtitle">About Your Future Carrer</label>
+                                <p className="pmd-list-title"><small>{empdata.about_your_future_carrer}</small></p>
+                            </div>
+                       
                         </div>
                         <hr />
 
@@ -181,72 +200,7 @@ const UserDetail = () => {
                                 <label className="pmd-list-subtitle">Family Type</label>
                                 <p className="pmd-list-title"><small>{empdata.family_type}</small></p>
                             </div>
-                            {/* <div className="col-12 col-md-6 col-lg-3">
-    <label className="pmd-list-subtitle">Date of Joinig</label>
-    <p className="pmd-list-title"><small>{new Date(empdata.date_of_joining).toLocaleDateString(
-          "pt-PT"
-        )}</small></p>
-  </div> */}
-                        </div>
-                        <hr />
-                        {/* <div className="row view-basic-card">
-                <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Bank Details</h3>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Aadhar Number</label>
-                    <p className="pmd-list-title"><small>{empdata.ADHAR}</small></p>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Pan Number</label><br />
-                    <small>{empdata.PAN_No}</small>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Bank A/C No.</label>
-                    <p className="pmd-list-title">{empdata.Bank_No}</p>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Bank IFSC Code</label>
-                    <p className="pmd-list-title"><small>{empdata.Bank_IFSC}</small></p>
-                </div>
-
-            </div> */}
-                        <hr />
-                        <div className="row view-basic-card">
-                            <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Auther Details</h3>
-                            <div className="col-12 col-md-6 col-lg-3">
-                                <label className="pmd-list-subtitle">Contact Number</label>
-                                <p className="pmd-list-title"><small>{empdata.number}</small></p>
-                            </div>
-                            <div className="col-12 col-md-6 col-lg-3">
-                                <label className="pmd-list-subtitle">Current City</label><br />
-                                <small>{empdata.city}</small>
-                            </div>
-
-                            <div className="col-12 col-md-6 col-lg-3">
-                                <label className="pmd-list-subtitle">Current Address</label>
-                                <p className="pmd-list-title"><small>{empdata.address}</small></p>
-                            </div>
-                            {/* <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Current State</label>
-                    <p className="pmd-list-title"><small>{empdata.current_state}</small></p>
-                </div> */}
-                            {/* <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Current Address</label>
-                    <p className="pmd-list-title"><small>{empdata.Current_Address}</small></p>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Permanent City</label>
-                    <p className="pmd-list-title"><small>{empdata.permanent_city}</small></p>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Permanent State</label>
-                    <p className="pmd-list-title"><small>{empdata.permanent_state}</small></p>
-                </div>
-                <div className="col-12 col-md-6 col-lg-3">
-                    <label className="pmd-list-subtitle">Permanent Address</label>
-                    <p className="pmd-list-title"><small>{empdata.Permanent_Address}</small></p>
-                </div> */}
-                        </div>
-                        <hr />
+                          </div>
                     </div>
                 </div>
             )}

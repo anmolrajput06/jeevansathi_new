@@ -137,10 +137,10 @@ hide : {
    type : Number,
    default : 0
 },
-  pictures: {
-    type: Buffer
+  // pictures: {
+  //   type: Buffer
 
-  },
+  // },
   active: {
     type: Boolean,
     default: true
