@@ -120,7 +120,7 @@ const About = () => {
                       href="https://www.wrappixel.com/templates/xtreme-react-redux-admin/?ref=33"
                       target="_blank"
                     >
-                      Check Pro Version
+                     
                     </Button>
                   </div>
                 </ComponentCard>

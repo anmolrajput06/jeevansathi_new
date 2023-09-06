@@ -29,16 +29,7 @@ const Forms = (props) => {
 console.log("userId",userId.id);
   //  const id = location.state._id;
   //  console.log(id,'44444444444');
-  if (props.data) {
-    var propsObject = props.data;
-    var base_salary_list = propsObject?.base_salary_list;
-    effective_lastIndex = propsObject.base_salary_list?.length - 1;
-  }
-  const [effectivesObj, setEffectivesObj] = useState({
-    base_salary: propsObject?.base_salary_list[effective_lastIndex].salary_,
-    effective_date:
-      propsObject?.base_salary_list[effective_lastIndex].effective_date,
-  });
+
   const expireAt = localStorage.getItem('expireAt')
   const dobDateInputRef = useRef(null);
   const dojDateInputRef = useRef(null);
@@ -100,31 +91,13 @@ console.log("userId",userId.id);
     handleGetUser();
 
     console.warn('fields--------', fields,);
-    console.warn(propsObject?.gender == "Male", '================================');
-  }, [propsObject]);
+  }, []);
 
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
-    if (effectiveDateInputRef.current && fieldObj.date_of_joining) {
-      const today = new Date(fieldObj.date_of_joining)
-        .toISOString()
-        .split("T")[0];
-      effectiveDateInputRef.current.setAttribute("min", today);
-    }
-    if (propsObject) {
-      const lastIndex = propsObject?.base_salary_list?.length - 1;
-      const today = new Date(
-        propsObject.base_salary_list[lastIndex].effective_date
-      )
-        .toISOString()
-        .split("T")[0];
-      effectiveDateInputRef.current.setAttribute("min", today);
-    }
-    setEffectivesObj({
-      salary_: fieldObj.base_salary,
-      effective_date: fieldObj.effective_date,
-    });
+ 
+
     console.log("fieldObj", fieldObj);
     setFields(fieldObj);
   }
@@ -132,20 +105,8 @@ console.log("userId",userId.id);
 
   function updateUserDetails(e) {
     e.preventDefault();
-    const index = base_salary_list.length - 1;
-    // console.log("effectivesObj", effectivesObj);
 
-    const effectiveCondition =
-      effectivesObj.base_salary == base_salary_list[index].salary_ ||
-      effectivesObj.effective_date == base_salary_list[index].effective_date ||
-      effectivesObj.salary_ == undefined ||
-      effectivesObj.effective_date == undefined;
-    // console.log("effectiveCondition", effectiveCondition);
-    if (!effectiveCondition) {
-      console.log("yes itss difff");
-      base_salary_list.push(effectivesObj);
-    }
-    let finalData = { ...fields, base_salary_list };
+    let finalData = { ...fields };
     console.log("finalData", finalData);
     const validationErrors = (fields, true);
     setErrors(validationErrors.errObj);
@@ -337,23 +298,7 @@ console.log("userId",userId.id);
                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">Gender</label>
-                      <div onChange={(e) => handleChange(e)}>
-                        <input
-                          type="radio"
-                          value="Male"
-                          name="gender"
-                          defaultChecked={propsObject?.gender == "Male"}
-                        />{" "}
-                        Male
-                        <input
-                          type="radio"
-                          value="Female"
-                          name="gender"
-                          className="ml-2"
-                          defaultChecked={propsObject?.gender == "Female"}
-                        />{" "}
-                        Female
-                      </div>
+                    
                       <div className="errorMsg">{errors.gender}</div>
                     </div>
                   </div>
@@ -363,23 +308,7 @@ console.log("userId",userId.id);
                         Marital Status
                       </label>
 
-                      <div onChange={(e) => handleChange(e)}>
-                        <input
-                          type="radio"
-                          value="Single"
-                          name="Marital_Status"
-                          defaultChecked={propsObject?.Marital_Status == "Single"}
-                        />{" "}
-                        Single
-                        <input
-                          type="radio"
-                          value="Married"
-                          name="Marital_Status"
-                          className="ml-2"
-                          defaultChecked={propsObject?.Marital_Status == "Married"}
-                        />{" "}
-                        Married
-                      </div>
+                   
                       <div className="errorMsg">{errors.Marital_Status}</div>
                     </div>
                   </div>

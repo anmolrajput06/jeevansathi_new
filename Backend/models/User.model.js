@@ -147,7 +147,10 @@ hide : {
   },
   status: {
     type: Number, default: 0
-  }
+  },
+  adharBack:{
+    type:String
+  },
 
 });
 

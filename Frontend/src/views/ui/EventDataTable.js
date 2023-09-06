@@ -8,28 +8,24 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { CgMoreO } from "react-icons/cg";
 import { TiArrowBack } from "react-icons/ti";
-
+import {MdOutlineEditCalendar} from "react-icons/md"
+import EventUpdate from "./EventUpdate";
 // import TopCards from "../../components/dashboard/TopCards";
 
-const EventDataTable = () => {
+const EventDataTable = (props) => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
-    const LoadDetail = (_id) => {
-    navigate("/employee/EmpDetail" + _id);
-  };
-  const generateSalary = (_id) => {
-    navigate("/employee/salary" + _id);
-  };
-  const deleteUser =async (_id) => {
-    
+ 
+  const deleteUser = async (_id) => {
+
     const formData = {
-     id:_id
+      id: _id
     };
-  
+
     const response = await axios.post('http://localhost:3002/Event/DeleteEvent', formData);
-    console.log("response",response);
+    console.log("response", response);
     Swal.fire({
       icon: 'success',
       title: 'Event Created',
@@ -42,7 +38,7 @@ const EventDataTable = () => {
 
   };
   useEffect(() => {
-  
+
     window
       .fetch(`http://localhost:3002/Event/GetEvent`)
       .then((res) => {
@@ -53,22 +49,29 @@ const EventDataTable = () => {
         let To_Date;
         let arr = [];
         let finalArr = [];
-        console.log('11111111111');
         for (let i = 0; i < resp.length; i++) {
           arr.push(resp[i]);
-        }  arr.map((e) => {
+        } arr.map((e) => {
           To_Date = new Date(e.To_Date).toLocaleDateString("pt-PT");
           from_date = new Date(e.from_date).toLocaleDateString("pt-PT");
           finalArr.push({ ...e, To_Date: To_Date, from_date: from_date });
         });
-        console.log('finalArr',finalArr);
+        console.log('finalArr', finalArr);
         empdatachange(finalArr);
       })
-  
+
       .catch((err) => {
         console.log(err);
       });
   }, []);
+  const LoadEdit = (_id) => {
+    const formData = {
+      id: _id
+    };
+    console.log('vjffj',formData);
+    navigate(`/eventUpdate/${formData.id}`);
+};
+
   // "_id": "64f1849699f44324205563a2",
   // "Title": "event",
   // "descripation": "craeet event",
@@ -86,23 +89,23 @@ const EventDataTable = () => {
 
   var columns = [
     {
-      name: "img",
+      name: "Img",
       cell: (row) => (
         <>
           {/* <img src={row.banner_image} alt="Image" /> */}
           {/* {row.banner_image && ( */}
-            <img
-              src={row.banner_image} // Use the function to convert buffer to data URL
-              alt="Image"
-              style={{ maxWidth: "100px" }} // Adjust the style as needed
-            />
+          <img
+            src={row.banner_image} // Use the function to convert buffer to data URL
+            alt="Image"
+            style={{ maxWidth: "100px" }} // Adjust the style as needed
+          />
           {/* )} */}
-       
+
         </>
       ),
     },
     {
-      name: "person_name",
+      name: "PersonName",
       selector: (rowData) => rowData["person_name"],
     },
     {
@@ -115,7 +118,7 @@ const EventDataTable = () => {
       },
     },
     {
-      name: "descripation",
+      name: "Descripation",
       selector: (rowData) => rowData["descripation"],
       sortable: true,
       width: "150px",                       // added line here
@@ -124,19 +127,19 @@ const EventDataTable = () => {
       },
     },
     {
-      name: "To_Date",
+      name: "ToDate",
       selector: (rowData) => rowData["To_Date"],
       sortable: true,
     },
     {
-      name: "from_date",
-      selector:  (rowData) => rowData["from_date"],
+      name: "FromDate",
+      selector: (rowData) => rowData["from_date"],
       sortable: true,
     },
 
     {
       name: "Contact",
-      selector:(rowData) => rowData["Contact"],
+      selector: (rowData) => rowData["Contact"],
     },
     {
       name: "Action",
@@ -150,11 +153,18 @@ const EventDataTable = () => {
             className="btn btn-md"
             onClick={() => {
               deleteUser(row._id);
+              window.location.reload()
             }}
           >
             <AiFillDelete />
           </span>
-       
+          <button
+            className="btn"
+            onClick={() => LoadEdit(row._id)}
+          >
+            <MdOutlineEditCalendar className="text-primary fs-3" />
+          </button>
+
         </>
       ),
 
@@ -166,7 +176,7 @@ const EventDataTable = () => {
     return (
       row.person_name ||
       row.Title ||
-      row.descripation||
+      row.descripation ||
       row.To_Date ||
       row.from_date ||
       row.Contact
@@ -174,7 +184,7 @@ const EventDataTable = () => {
   });
   return (
     <div>
-       <Link to="/EventForm" className="btn text-dark">
+      <Link to="/EventForm" className="btn text-dark">
         <TiArrowBack size={30} />
       </Link>
       <div>
@@ -190,23 +200,16 @@ const EventDataTable = () => {
               >
                 <div style={{ display: "flex" }}>
                   <h4>Event</h4>{" "}
-                  <Link
-                    to="/EventForm"
-                    className="btn btn-primary btn-sm ml-5 mr-5"
-                  >
-                    Add New (+)
-                  </Link>
+
                 </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Search"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="form-control"
-                  />
-                </div>
+                <Link
+                  to="/EventForm"
+                  className="btn btn-primary btn-sm ml-5 mr-5"
+                >
+                  Add New
+                </Link>
               </div>
+
             }
             columns={columns}
             data={filteredData ? filteredData : []}

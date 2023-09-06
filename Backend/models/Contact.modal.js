@@ -12,6 +12,9 @@ const contactSchema = new mongoose.Schema({
     Loking: {
         type: String,
 
+    },
+    user_Id: {
+        type: mongoose.Schema.Types.ObjectId,
     }
 });
 

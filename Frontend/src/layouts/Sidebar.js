@@ -29,7 +29,7 @@ const navigation = [
   //   icon: "bi bi-card-text",
   // },
   {
-    title: "Event_List",
+    title: "EventList",
     href: "/EventDataTable",
     icon: "bi bi-columns",
   },
@@ -38,11 +38,11 @@ const navigation = [
     href: "/table",
     icon: "bi bi-layout-split",
   },
-  // {
-  //   title: "Forms",
-  //   href: "/forms",
-  //   icon: "bi bi-textarea-resize",
-  // },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: "bi bi-textarea-resize",
+  },
   // {
   //   title: "Breadcrumbs",
   //   href: "/breadcrumbs",
@@ -64,7 +64,8 @@ const Sidebar = () => {
   return (
     <div className="p-3">
       <div className="d-flex align-items-center">
-        <Logo />
+        {/* <Logo /> */}
+        <h4>ADMIN</h4>
         <span className="ms-auto d-lg-none">
         <Button
           close
