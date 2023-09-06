@@ -1,9 +1,15 @@
 const bcrypt = require('bcrypt');
 const { User, } = require('../models/User.model');
 const jwt = require('jsonwebtoken');
-
+const { validationResult, check } = require('express-validator');
 
 async function signUp(req, res) {
+
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     const {
       candidates_name,
@@ -43,7 +49,7 @@ async function signUp(req, res) {
       if (existingUser) {
         return res.status(400).json({ message: 'Username or email is already taken.' });
       }
-      var profileCompletion = 0;
+      let responseMessage = '';
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const newUser = new User({
@@ -57,7 +63,7 @@ async function signUp(req, res) {
         loking,
         status: "1",
       });
-      profileCompletion = profileCompletion + 1
+      responseMessage = 'Profile incomplete'
 
       await newUser.save();
       return res.status(201).json({ status: true, message: 'Added successfully.', data: 1 });
@@ -80,12 +86,12 @@ async function signUp(req, res) {
           address,
         }
       };
-      profileCompletion = profileCompletion + 1
+      responseMessage = 'Profile incomplete'
 
       const updateResult = await User.updateOne(myquery, newvalues);
       console.log(updateResult.nModified + " document(s) updated");
 
-      return res.status(201).json({ status: true, message: 'Updated successfully.', data: 2 });
+      return res.status(201).json({ status: true, message: 'Updated successfully.', responseMessage, data: 2 });
 
     } else if (status === "3") {
       const myquery = { email: email };
@@ -99,25 +105,19 @@ async function signUp(req, res) {
           physically_challenge,
           about_your_future_career,
           // picture,
+
+
           status: "3",
           active,
           hide,
         }
       };
-      profileCompletion = profileCompletion + 1
-      let responseMessage = '';
+      responseMessage = 'Profile completed'
       const picture = req.file
-      const aadharFront = req.file
+      const aadharFrot = req.file
       const adharBack = req.file
       const updateResult = await User.updateMany(myquery, newvalues);
       console.log(updateResult.nModified + " document(s) updated");
-      if (profileCompletion === 0) {
-        responseMessage = 'Profile incomplete'; // Set the response message for incomplete profile
-      } else if (profileCompletion === 3) {
-        responseMessage = 'Profile completed'; // Set the response message for completed profile
-      } else {
-        responseMessage = 'Profile incomplete'; // Set the response message for partially completed profile or any other intermediate state
-      }
 
       return res.status(201).json({ status: true, message: responseMessage, data: status });
     } else {

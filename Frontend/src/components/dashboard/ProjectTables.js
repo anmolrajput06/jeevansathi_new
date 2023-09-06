@@ -286,18 +286,17 @@ const ProjectTables = () => {
           />
         </CardBody>
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={modalStyles}>
-          <h2 style={{ textAlign: 'center' }}> Intrested  List</h2>
+          <h3 style={{ textAlign: 'center' }}> Intrested List</h3>
           {responseItems.map((item, index) => (
             <>
-
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <p key={index} style={{ margin: '0' }}>{item.candidates_name}</p>
+                <p key={index} style={{ margin: '0', marginRight: '60px' }}>{item.candidates_name}</p>
                 <Link to={`/userdetails/${item._id}`} style={{ margin: '0' }}>
                   <BiShow />
                 </Link>
               </div>
-
             </>
+
           ))}
           <button onClick={closeModal} style={buttonStyles}>
             Close
