@@ -14,7 +14,7 @@ import ReactPaginate from 'react-paginate';
 // import { useTable } from 'react-table';
 import axios from 'axios';
 import Modal from 'react-modal';
-
+import host from "../../views/ui/utils"
 // Set the root element for the modal
 Modal.setAppElement('#root');
 
@@ -52,7 +52,7 @@ const ProjectTables = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get("http://localhost:3002/get_List/getalluser")
+    axios.get(`${host}/get_List/getalluser`)
       .then(response => {
         setTableData(response.data); // Update state with fetched data
       })
@@ -85,7 +85,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/hidestatus/update',
+      url: `${host}/get_List/hidestatus/update`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -112,7 +112,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/user/delete',
+      url: `${host}/get_List/user/delete`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -146,7 +146,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/intreted_user',
+      url: `${host}/intreted_user`,
       headers: {
         'Content-Type': 'application/json'
       },

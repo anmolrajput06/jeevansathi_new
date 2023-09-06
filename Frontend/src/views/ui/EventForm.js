@@ -6,14 +6,13 @@ import { toast, ToastContainer } from "react-toastify";
 
 import "./eventForm.css"
 import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import host from "./utils";
 const EventForm = (props) => {
 
-  console.log('propspropspropsprops', props);
   if (props.data) {
     var propsObject = props.data;
 
   }
-  console.log("pppppppp", propsObject);
 
   const [Title, setTitle] = useState(props.data?.Title || "");
   const [description, setDescription] = useState(props.data?.descripation || "");
@@ -33,15 +32,6 @@ const EventForm = (props) => {
     }
 
   }, [propsObject]);
-
-
-  console.log(fields, 'fieldsfieldsfieldsfields', fields.Title);
-  // function handleChange(e) {
-  //   let fieldObj = { ...fields };
-  //   fieldObj[e.target.name] = e.target.value;
-  //   setFields(fieldObj);
-  // }
-  // console.log('fieldObjfieldObjfieldObjfieldObj',fieldObj,'fieldObj');
   const notify = (message) => {
     toast(
       message == "alredy exist ADHAR."
@@ -109,7 +99,7 @@ const EventForm = (props) => {
     e.preventDefault();
     console.log('fields', fields)
     try {
-      const response = await axios.post('http://localhost:3002/Event/CreateEvent', formData);
+      const response = await axios.post(`${host}/Event/CreateEvent`, formData);
       Swal.fire({
         icon: 'success',
         title: 'Event Created',
@@ -159,7 +149,7 @@ const EventForm = (props) => {
     if (validationErrors) {
       setSubmitDisable(true);
       axios
-        .post(`http://localhost:3002/Event/eventUpdate` , formData)
+        .post(`${host}/Event/eventUpdate` , formData)
         .then((response) => {
           console.log("success", response);
           if (response.data.message == "Event updated successfully") {

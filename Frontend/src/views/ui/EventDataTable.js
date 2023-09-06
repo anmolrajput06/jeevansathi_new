@@ -11,7 +11,7 @@ import { TiArrowBack } from "react-icons/ti";
 import {MdOutlineEditCalendar} from "react-icons/md"
 import EventUpdate from "./EventUpdate";
 // import TopCards from "../../components/dashboard/TopCards";
-
+import host from "./utils";
 const EventDataTable = (props) => {
   const { id } = useParams();
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,7 +24,7 @@ const EventDataTable = (props) => {
       id: _id
     };
 
-    const response = await axios.post('http://localhost:3002/Event/DeleteEvent', formData);
+    const response = await axios.post(`${host}/Event/DeleteEvent`, formData);
     console.log("response", response);
     Swal.fire({
       icon: 'success',
@@ -40,7 +40,7 @@ const EventDataTable = (props) => {
   useEffect(() => {
 
     window
-      .fetch(`http://localhost:3002/Event/GetEvent`)
+      .fetch(`${host}/Event/GetEvent`)
       .then((res) => {
         return res.json();
       })

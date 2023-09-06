@@ -20,6 +20,7 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 import { useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import axios from 'axios';
+import host from "../views/ui/utils"
 // Set the root element for the modal
 Modal.setAppElement('#root');
 
@@ -127,7 +128,7 @@ const Header = () => {
 // console.log(profileImage,'vprofileImage',aadharFrontImage,'aadharFrontImage','aadharBackImage,',aadharBackImage);
     // Send the formData to your server using fetch or Axios
     console.log(formData,'formDataformDataformDataformDataformDataformDataformDataformData');
-     axios.post('http://localhost:3002/upload', formData, {
+     axios.post(`${host}/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { TiArrowBack } from "react-icons/ti"
 import axios from "axios";
 import ImageSlider from "./ImageSlider";
+import host from "./utils"
 const UserDetail = () => {
     const navigate = useNavigate();
     const id = useParams();
@@ -18,7 +19,7 @@ const UserDetail = () => {
  
     const handleGetUser = async () => {
         try {
-            const response = await axios.post('http://localhost:3002/get_List/get_user_id', { userId: id.id });
+            const response = await axios.post(`${host}/get_List/get_user_id`, { userId: id.id });
             empdatachange(response.data);
 
             // Set the image URL from the response data

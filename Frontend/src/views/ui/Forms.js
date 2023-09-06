@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { TiArrowBack } from "react-icons/ti";
 import { FaTrash } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
+import host from "./utils"
 const Forms = (props) => {
   let effective_lastIndex;
   const location = useLocation();
@@ -48,28 +49,9 @@ console.log("userId",userId.id);
     let data = {
       "userId":userId.id
     };
-    console.log("data", data);
-    console.log(data.userId=='64ed8b0f9a92b5440f779cb5',data.userId,'64ed8b0f9a92b5440f779cb5');
-//     let config = {
-//       method: 'post',
-//       maxBodyLength: Infinity,
-//       url: 'http://localhost:3002/get_List/get_user_id',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       data: data
-//     };
-// console.log(config,'config');
-//     axios.request(config)
-//       .then((response) => {
-//         console.log(response.data,'0000000000000000000000000');
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
 
 
-    axios.post('http://localhost:3002/get_List/get_user_id',data)
+    axios.post(`${host}/get_List/get_user_id`,data)
       .then((res) => {
 
         console.log("response", res);

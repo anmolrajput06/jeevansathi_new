@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./login.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
+import host from "../views/ui/utils";
 
 function Login({ onLogin }) {
     const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ function Login({ onLogin }) {
         // handle login logic here
         event.preventDefault();
         axios
-            .post(`http://localhost:3002/auth/login`, { email, password })
+            .post(`${host}/auth/login`, { email, password })
             .then((res) => {
                 console.log("response", res.data);
                 if (res.data.token) {

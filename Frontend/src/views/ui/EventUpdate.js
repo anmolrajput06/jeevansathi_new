@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EventForm from './EventForm';
 import axios from 'axios'; // Import Axios
-
+import host from "./utils";
 const EventUpdate = () => {
     const { id } = useParams();
     const [empdata, empdatachange] = useState();
@@ -15,7 +15,7 @@ const EventUpdate = () => {
         let config = {
             method: 'post', // Use POST method
             maxBodyLength: Infinity,
-            url: 'http://localhost:3002/Event/getEventById',
+            url: `${host}/Event/getEventById`,
             headers: {
                 'Content-Type': 'application/json'
             },

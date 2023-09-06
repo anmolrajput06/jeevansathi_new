@@ -12,7 +12,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { MdOutlineEditCalendar } from "react-icons/md"
 import EventUpdate from "./EventUpdate";
 import { BiShow } from 'react-icons/bi';
-
+import host from "./utils";
 // import TopCards from "../../components/dashboard/TopCards";
 const Contact = () => {
   const { id } = useParams();
@@ -20,29 +20,10 @@ const Contact = () => {
   const [empdata, empdatachange] = useState([]);
   const navigate = useNavigate();
 
-  // const deleteUser = async (_id) => {
-
-  //   const formData = {
-  //     id: _id
-  //   };
-
-  //   const response = await axios.post('http://localhost:3002/Event/DeleteEvent', formData);
-  //   console.log("response", response);
-  //   Swal.fire({
-  //     icon: 'success',
-  //     title: 'Event Created',
-  //     text: 'Your event has been successfully deleted.',
-  //   }).then(() => {
-  //     // After the SweetAlert is closed, redirect to another page
-  //     navigate('/EventDataTable');
-  //     // Replace '/another-page' with your desired route
-  //   });
-
-  // };
   useEffect(() => {
 
     window
-      .fetch(`http://localhost:3002/contact//GetContact`)
+      .fetch(`${host}/contact//GetContact`)
       .then((res) => {
         return res.json();
       })
