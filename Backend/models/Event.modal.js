@@ -4,11 +4,11 @@ const eventSchema = new mongoose.Schema({
   // STATUS 1
   Title: {
     type: String,
-    required: true,
+    // required: true,
   },
   descripation: {
     type: String,
-    required: true,
+    // required: true,
   },
   banner_image: {
     type: String

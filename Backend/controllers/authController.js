@@ -61,7 +61,7 @@ async function signUp(req, res) {
         work,
         gendar,
         loking,
-        status: "1",
+
       });
       responseMessage = 'Profile incomplete'
 
@@ -95,7 +95,7 @@ async function signUp(req, res) {
 
     } else if (status === "3") {
       const myquery = { email: email };
-      console.log(req.file); // Add this line
+      console.log(req.file);
       const newvalues = {
         $set: {
           height,
@@ -105,17 +105,23 @@ async function signUp(req, res) {
           physically_challenge,
           about_your_future_career,
           // picture,
-
-
           status: "3",
           active,
           hide,
         }
       };
-      responseMessage = 'Profile completed'
+
       const picture = req.file
       const aadharFrot = req.file
       const adharBack = req.file
+      if (aadharFrot && adharBack) {
+
+        responseMessage = 'Profile completed'
+      }
+      else {
+        responseMessage = 'Profile Incompleted'
+
+      }
       const updateResult = await User.updateMany(myquery, newvalues);
       console.log(updateResult.nModified + " document(s) updated");
 
