@@ -1,3 +1,6 @@
+
+
+
 const bcrypt = require('bcrypt');
 const { User, } = require('../models/User.model');
 const jwt = require('jsonwebtoken');
@@ -111,9 +114,29 @@ async function signUp(req, res) {
         }
       };
 
+
+      responseMessage = 'Profile Incompleted'
+
+
+      const updateResult = await User.updateMany(myquery, newvalues);
+      console.log(updateResult.nModified + " document(s) updated");
+
+      return res.status(201).json({ status: true, message: responseMessage, data: status });
+    } else if (status === "4") {
+      var myquery = { email: email };
       const picture = req.file
       const aadharFrot = req.file
       const adharBack = req.file
+
+      const newvalues = {
+        $set: {
+          aadharFrot,
+          adharBack,
+          status: "4",
+
+        }
+      };
+
       if (aadharFrot && adharBack) {
 
         responseMessage = 'Profile completed'
@@ -168,20 +191,96 @@ async function login(req, res) {
 };
 async function userUpdate(req, res) {
   try {
-    const userId = req.params.id; // User ID from the URL
-    const updateData = req.body; // Data to update
+    const {
+      _id,
+      candidates_name,
+      surname,
+      email,
+      number,
+      work,
+      gendar,
+      loking,
+      password,
+      mother_name,
+      father_name,
+      gotra,
+      father_occupation,
+      mother_occupation,
+      sister,
+      brother,
+      status_type,
+      city,
+      state,
+      native_city,
+      address,
+      height,
+      education,
+      family_type,
+      professional,
+      physically_challenge,
+      about_your_future_career,
+      picture,
+      status,
+      active,
+      hide
+    } = req.body;
 
-    // Check if the user exists
-    const user = await User.findById(userId);
+
+    if (!req.body) {
+      return res.status(400).send({
+        message: "Data to update can not be empty!"
+      });
+    }
+    const user = await User.findById(_id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
     // Update user data
-    await User.findByIdAndUpdate(userId, updateData);
+    await User.findByIdAndUpdate(_id, {
+      candidates_name,
+      surname,
+      email,
+      number,
+      work,
+      gendar,
+      loking,
+      password,
+      mother_name,
+      father_name,
+      gotra,
+      father_occupation,
+      mother_occupation,
+      sister,
+      brother,
+      status_type,
+      city,
+      state,
+      native_city,
+      address,
+      height,
+      education,
+      family_type,
+      professional,
+      physically_challenge,
+      about_your_future_career,
+      picture,
+      status,
+      active,
+      hide
+    }).then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update =${id}`
+        });
+      } else res.send({ message: "updated successfully." });
+    }).catch(err => {
+      res.status(500).send({
+        message: "Error updating=" + id, err
+      });
+      console.log(err)
+    });
 
-    return res.status(200).json({ message: 'User updated successfully' });
   } catch (error) {
     console.error('Error updating user:', error);
     return res.status(500).json({ message: 'An error occurred while updating user.' });
@@ -191,3 +290,4 @@ async function userUpdate(req, res) {
 module.exports = {
   signUp, login, userUpdate
 };
+

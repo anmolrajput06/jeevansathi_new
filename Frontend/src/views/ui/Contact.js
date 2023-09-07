@@ -28,8 +28,7 @@ const Contact = () => {
         return res.json();
       })
       .then((resp) => {
-        console.log(resp[0].Full_Name);
-        console.log(resp[0].user_data[0].candidates_name, '999999999999999999999999999999');
+
         empdatachange(resp);
       })
 
@@ -71,7 +70,7 @@ const Contact = () => {
             to={`/userdetails/${row.user_data[0]._id}`}
             style={{
               textDecoration: 'none',        // Remove underlines (optional)
-              cursor: 'pointer',    
+              cursor: 'pointer',
               color: 'inherit',         // Show pointer cursor on hover (optional)
             }}
           >

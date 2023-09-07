@@ -4,7 +4,8 @@ import user2 from "../../assets/images/users/user2.jpg";
 import user3 from "../../assets/images/users/user3.jpg";
 import user4 from "../../assets/images/users/user4.jpg";
 import user5 from "../../assets/images/users/user5.jpg";
-import { BiShow } from 'react-icons/bi';
+import { BiShow, BiSolidEditAlt } from 'react-icons/bi';
+
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { AiFillDelete } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
@@ -14,7 +15,7 @@ import ReactPaginate from 'react-paginate';
 // import { useTable } from 'react-table';
 import axios from 'axios';
 import Modal from 'react-modal';
-import host from "../../views/ui/utils"
+
 // Set the root element for the modal
 Modal.setAppElement('#root');
 
@@ -49,17 +50,22 @@ const ProjectTables = () => {
   const [perPage] = useState(5); // Number of items per page
   const [offset, setOffset] = useState(0);
   const [viewAll, setViewAll] = useState(false);
+  const [getrefresh, setrefresh] = useState(false);
+  const [usercount,setUsercount]=useState(0)
+
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get(`${host}/get_List/getalluser`)
+    axios.get("http://localhost:3002/get_List/getalluser")
       .then(response => {
         setTableData(response.data); // Update state with fetched data
+        console.log(response.data.length,'0000');
+        setUsercount(response.data.length)
       })
       .catch(error => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [getrefresh]);
 
   useEffect(() => {
     setOffset(currentPage * perPage);
@@ -72,7 +78,7 @@ const ProjectTables = () => {
   const handleViewAllClick = () => {
     setViewAll(true);
   };
-
+console.log(usercount,'0------------------0');
   const setToggleSwitch = (e, userData) => {
     console.log("e", e);
     console.log("data", userData);
@@ -85,7 +91,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `${host}/get_List/hidestatus/update`,
+      url: 'http://localhost:3002/get_List/hidestatus/update',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -95,7 +101,8 @@ const ProjectTables = () => {
     axios.request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
-        window.location.reload()
+        setrefresh(!getrefresh)
+
       })
       .catch((error) => {
         console.log(error);
@@ -103,7 +110,7 @@ const ProjectTables = () => {
 
   }
 
-
+  // DELTE API
   const deleteUser = (user_id) => {
     let data = JSON.stringify({
       "user_id": user_id
@@ -112,7 +119,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `${host}/get_List/user/delete`,
+      url: 'http://localhost:3002/get_List/user/delete',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -132,6 +139,7 @@ const ProjectTables = () => {
 
 
   }
+
 
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -146,7 +154,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: `${host}/intreted_user`,
+      url: 'http://localhost:3002/get_List/intreted_user',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -185,6 +193,8 @@ const ProjectTables = () => {
                 <th>City</th>
                 <th>Intrested</th>
                 <th>Hide/ Show</th>
+                {/* <th>View</th> */}
+                <th>status</th>
                 <th>Action</th>
 
 
@@ -221,7 +231,9 @@ const ProjectTables = () => {
 
                   <td>{tdata.state}</td>
                   <td>{tdata.city}</td>
-                  <td><button onClick={() => { openModal(tdata._id) }} style={buttonStyles}>Intrested</button></td>
+                  <td>
+                    <button onClick={() => { openModal(tdata._id) }} style={buttonStyles}>Intrested</button>
+                  </td>
 
                   <td>
                     <BootstrapSwitchButton
@@ -233,41 +245,39 @@ const ProjectTables = () => {
                     />
 
                   </td>
-                  <td>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <Link to={`/userdetails/${tdata._id}`}>
-                        <BiShow />
-                      </Link>
-                      {tdata.active === false ? (
+                  {/* <td>
+                    <Link to={`/userdetails/${tdata._id}`}>
+                      <BiShow />
+                    </Link>
+                  </td> */}
+                  <td> {tdata.active === false ? (
                         <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
                       ) : tdata.status === true ? (
                         <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
                       ) : (
                         <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                      )}
-                      <span className="btn btn-md" onClick={() => { deleteUser(tdata._id); }}> <AiFillDelete /></span>
+                      )}</td>
+                  <td>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+
+                     
+                      <div>
+                        <Link to={`/useredit/${tdata._id}`}>
+                          <BiSolidEditAlt />
+                        </Link>
+
+                        <span className="btn btn-md" onClick={() => { deleteUser(tdata._id); }}> <AiFillDelete /></span>
+                    
+                        <Link to={`/userdetails/${tdata._id}`}>
+                      <BiShow />
+                    </Link>
+                    
+                      </div>
+
                     </div>
                   </td>
 
 
-                  {/* <td >
-
-                    <Link to={`/userdetails/${tdata._id}`}>
-                      <BiShow />
-                    </Link>
-                    
-                    
-                    </td>
-                  <td>
-                    {tdata.active === false ? (
-                      <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                    ) : tdata.status === true ? (
-                      <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                    ) : (
-                      <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                    )}
-                  </td>
-                  <td><span className="btn btn-md" onClick={() => { deleteUser(tdata._id); }}> <AiFillDelete /></span>  </td> */}
                 </tr>
 
               ))}
@@ -286,18 +296,37 @@ const ProjectTables = () => {
           />
         </CardBody>
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={modalStyles}>
-          <h3 style={{ textAlign: 'center' }}> Intrested List</h3>
-          {responseItems.map((item, index) => (
-            <>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <p key={index} style={{ margin: '0', marginRight: '60px' }}>{item.candidates_name}</p>
-                <Link to={`/userdetails/${item._id}`} style={{ margin: '0' }}>
-                  <BiShow />
-                </Link>
-              </div>
-            </>
+          <h2 style={{ textAlign: 'center' }}> Intrested  List</h2>
+          {/* {/ {responseItems.map((item, index) => ( /}
+          <>
 
-          ))}
+            <table>
+              <thead>
+                <tr>
+                  <th style={{ margin: '5px' }}>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                </tr>
+              </thead>
+              <tbody>
+                {responseItems.map((item, index) => (
+                  <tr key={item.candidates_name}>
+                    <td style={{ margin: '5px' }}>{index + 1}</td>
+                    <td style={{ marginRight: '5px' }} >{item.candidates_name.split(','[0])}</td>
+                    <td>
+                      <Link to={`/userdetails/${item._id}`} style={{ margin: '0' }}>
+                        <BiShow />
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+       
+
+          </>
+          {/ ))} /} */}
           <button onClick={closeModal} style={buttonStyles}>
             Close
           </button>

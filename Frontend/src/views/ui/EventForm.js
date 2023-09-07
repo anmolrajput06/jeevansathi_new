@@ -14,6 +14,7 @@ const EventForm = (props) => {
 
   }
 
+
   const [Title, setTitle] = useState(props.data?.Title || "");
   const [description, setDescription] = useState(props.data?.descripation || "");
   const [To_Date, setTo_Date] = useState(props.data?.To_Date || "");
@@ -53,20 +54,22 @@ const EventForm = (props) => {
       }
     );
   };
-  // console.log("bannerImage =>",bannerImage);
+
+
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await createEvent(e);
-      console.log('Event created:', response);
+      // console.log('Event created:', response);
       // You can handle success or redirect to a different page here.
     } catch (error) {
       console.error('Error creating event:', error);
       // Handle the error as needed (e.g., show an error message).
     }
   }
+
   const handleFileInputChange = (e) => {
     const selectedFile = e.target.files[0]; // Assuming you're uploading a single file
     const file = e.target.files[0];
@@ -83,6 +86,8 @@ const EventForm = (props) => {
       reader.readAsDataURL(file);
     }
   };
+
+
   const formData = {
     Title: Title,
     descripation: description,
@@ -94,10 +99,11 @@ const EventForm = (props) => {
     banerImg: bannerImage
     // Add other properties if needed
   };
-  console.log(formData, 'formData', fields);
+
+
   const createEvent = async (e) => {
     e.preventDefault();
-    console.log('fields', fields)
+    // console.log('fields', fields)
     try {
       const response = await axios.post(`${host}/Event/CreateEvent`, formData);
       Swal.fire({
@@ -123,11 +129,12 @@ const EventForm = (props) => {
       throw error;
     }
   };
+
   function updateEvent(e) {
     e.preventDefault();
 
     let finalData = { ...fields };
-    console.log("finalData", finalData);
+    // console.log("finalData", finalData);
     const validationErrors = (fields, true);
     const formData = {
       eventId: props.data._id,
@@ -144,14 +151,14 @@ const EventForm = (props) => {
 
 
 
-    console.log(formData,'formData');
+    // console.log(formData,'formData');
     setErrors(validationErrors.errObj);
     if (validationErrors) {
       setSubmitDisable(true);
       axios
-        .post(`${host}/Event/eventUpdate` , formData)
+        .post(`${host}/Event/eventUpdate`, formData)
         .then((response) => {
-          console.log("success", response);
+          // console.log("success", response);
           if (response.data.message == "Event updated successfully") {
             Swal.fire({
               icon: "success",
@@ -170,13 +177,14 @@ const EventForm = (props) => {
         });
     }
   }
-const handleChange = (e, fieldName) => {
-  const { value } = e.target;
-  setFields({
-    ...fields,
-    [fieldName]: value,
-  });
-};
+
+  const handleChange = (e, fieldName) => {
+    const { value } = e.target;
+    setFields({
+      ...fields,
+      [fieldName]: value,
+    });
+  };
 
   return (
     <div className="page-container">
@@ -186,14 +194,13 @@ const handleChange = (e, fieldName) => {
       }}>
         <div className="form-group">
           <label htmlFor="Title">Person Name:</label>
-          {/* <input type="text" id="Title" name="Title" /> */}
+          {/* {/ <input type="text" id="Title" name="Title" /> /} */}
           <input
             type="text"
             placeholder="Enter person name"
-            value={fields.person_name}
+            defaultValue={fields.person_name}
             onChange={(event) => setPerson_name(event.target.value)}
-            // onChange={(event) => handleChange(event, 'person_name')}
-
+          // onChange={(event) => handleChange(event, 'person_name')}
           // onChange={(e) => handleChange(e)}
           />
         </div>
@@ -202,21 +209,21 @@ const handleChange = (e, fieldName) => {
           <input
             type="text"
             placeholder="Enter contact no:"
-            value={fields.Contact}
+            defaultValue={fields.Contact}
             onChange={(event) => setContact(event.target.value)}
-            // onChange={(event) => handleChange(event, 'Contact')}
+          // onChange={(event) => handleChange(event, 'Contact')}
           // onChange={(e) => handleChange(e)}
           />
         </div>
         <div className="form-group">
           <label htmlFor="Title">Title:</label>
-          {/* <input type="text" id="Title" name="Title" /> */}
+          {/* {/ <input type="text" id="Title" name="Title" /> /} */}
           <input
             type="text"
             placeholder="Enter title"
-            value={fields.Title}
+            defaultValue={fields.Title}
             onChange={(event) => setTitle(event.target.value)}
-            // onChange={(event) => handleChange(Title, 'Title')}
+          // onChange={(event) => handleChange(Title, 'Title')}
           // onChange={(e) => handleChange(e)}
           />
         </div>
@@ -226,13 +233,14 @@ const handleChange = (e, fieldName) => {
           <textarea
             id="description"
             name="description"
-            value={fields.descripation}
+            defaultValue={fields.descripation}
             onChange={(event) => setDescription(event.target.value)}
-            // onChange={(event) => handleChange(description, 'descripation')}
+          // onChange={(event) => handleChange(description, 'descripation')}
           // onChange={(e) => handleChange(e)}
           ></textarea>
 
         </div>
+
 
         <div className="date-group">
           <div className="form-group">
@@ -241,10 +249,10 @@ const handleChange = (e, fieldName) => {
               type="date"
               id="from_date"
               name="from_date"
-              value={fields.from_date}
+              defaultValue={from_date.split('T')[0]}
+              // min={from_date.split('T')[0]}// Replace with your minimum date
+              max={To_Date.split('T')[0]} // Replace with your maximum date
               onChange={(event) => setFrom_date(event.target.value)}
-              // onChange={(event) => handleChange(from_date, 'from_date')}
-            // onChange={(e) => handleChange(e)}
             />
           </div>
 
@@ -254,13 +262,16 @@ const handleChange = (e, fieldName) => {
               type="date"
               id="to_date"
               name="To_Date"
-              value={fields.To_Date}
+              defaultValue={To_Date.split('T')[0]}
+              min={from_date.split('T')[0]}// Replace with your minimum date
+              max="YYYY-MM-DD" // Replace with your maximum date
               onChange={(event) => setTo_Date(event.target.value)}
-              // onChange={(event) => handleChange(To_Date, 'To_Date')}
-            // onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
+
+
+
 
         <div className="form-group">
           <label htmlFor="banner_image">Banner Image:</label>

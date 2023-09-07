@@ -10,6 +10,7 @@ import { CgMoreO } from "react-icons/cg";
 import { TiArrowBack } from "react-icons/ti";
 import {MdOutlineEditCalendar} from "react-icons/md"
 import EventUpdate from "./EventUpdate";
+import { BiShow, BiSolidEditAlt } from 'react-icons/bi';
 // import TopCards from "../../components/dashboard/TopCards";
 import host from "./utils";
 const EventDataTable = (props) => {
@@ -162,7 +163,7 @@ const EventDataTable = (props) => {
             className="btn"
             onClick={() => LoadEdit(row._id)}
           >
-            <MdOutlineEditCalendar className="text-primary fs-3" />
+            <BiSolidEditAlt />
           </button>
 
         </>

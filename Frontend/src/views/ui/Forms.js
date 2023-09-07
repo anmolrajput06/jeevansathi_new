@@ -26,8 +26,8 @@ const Forms = (props) => {
   let effective_lastIndex;
   const location = useLocation();
 
-  const userId  = useParams();
-console.log("userId",userId.id);
+  const userId = useParams();
+  console.log("userId", userId.id);
   //  const id = location.state._id;
   //  console.log(id,'44444444444');
 
@@ -47,13 +47,11 @@ console.log("userId",userId.id);
   const handleGetUser = (event) => {
 
     let data = {
-      "userId":userId.id
+      "userId": userId.id
     };
 
-
-    axios.post(`${host}/get_List/get_user_id`,data)
+    axios.post(`${host}/get_List/get_user_id`, data)
       .then((res) => {
-
         console.log("response", res);
         if (res.data) {
           setFields(res.data)
@@ -78,7 +76,7 @@ console.log("userId",userId.id);
   function handleChange(e) {
     let fieldObj = { ...fields };
     fieldObj[e.target.name] = e.target.value;
- 
+
 
     console.log("fieldObj", fieldObj);
     setFields(fieldObj);
@@ -86,12 +84,42 @@ console.log("userId",userId.id);
 
 
   function updateUserDetails(e) {
-    e.preventDefault();
-
     let finalData = { ...fields };
-    console.log("finalData", finalData);
-    const validationErrors = (fields, true);
-    setErrors(validationErrors.errObj);
+    let id = {
+      "userId": userId.id
+    };
+    console.log(finalData, '999999999999999999999', id);
+
+    let data = JSON.stringify(
+      finalData
+    );
+
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:3002/auth/updateUser',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        if (response.data.message == "updated successfully.") {
+          Swal.fire({
+            icon: "success",
+            title: "Successful",
+            text: "User Successfully Updated!",
+          }).then(() => {
+            navigate("/table");
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
   }
 
@@ -280,7 +308,7 @@ console.log("userId",userId.id);
                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div className="form-group">
                       <label className="profile_details_text">Gender</label>
-                    
+
                       <div className="errorMsg">{errors.gender}</div>
                     </div>
                   </div>
@@ -290,7 +318,7 @@ console.log("userId",userId.id);
                         Marital Status
                       </label>
 
-                   
+
                       <div className="errorMsg">{errors.Marital_Status}</div>
                     </div>
                   </div>
@@ -329,6 +357,7 @@ console.log("userId",userId.id);
                       <div className="errorMsg">{errors.gotra}</div>
                     </div>
                   </div>
+
                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div className="form-group">
                       <label>mother_occupation</label>
@@ -340,6 +369,20 @@ console.log("userId",userId.id);
                         placeholder="mother_occupation"
                       ></input>
                       <div className="errorMsg">{errors.mother_occupation}</div>
+                    </div>
+
+                  </div>
+                  <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div className="form-group">
+                      <label>State</label>
+                      <input
+                        name="state"
+                        defaultValue={fields.state}
+                        onChange={(e) => handleChange(e)}
+                        className="form-control"
+                        placeholder="state"
+                      ></input>
+                      <div className="errorMsg">{errors.state}</div>
                     </div>
                   </div>
                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -611,7 +654,7 @@ console.log("userId",userId.id);
                     type="submit"
                     value="Submit"
                     className="col-lg-6 col-md-6 col-sm-6 col-xs-6 my-3 btn btn-success"
-                  // onClick={(e) => submituserRegistrationForm(e)}
+                    onClick={(e) => updateUserDetails(e)}
                   // onClick={()=>{handleGetUser()}}
                   />
                 )}

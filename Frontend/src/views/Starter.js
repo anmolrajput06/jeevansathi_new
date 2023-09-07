@@ -8,7 +8,7 @@ import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
-
+import { ImUsers } from "react-icons/im";
 const BlogData = [
   {
     image: bg1,
@@ -45,6 +45,8 @@ const BlogData = [
 ];
 
 const Starter = () => {
+
+  console.log(ProjectTables);
   return (
     <div>
       {/***Top Cards***/}
@@ -53,9 +55,9 @@ const Starter = () => {
           <TopCards
             bg="bg-light-success text-success"
             title="Profit"
-            subtitle="Yearly Earning"
-            earning="$21k"
-            icon="bi bi-wallet"
+            subtitle="Total User "
+            earning={9}
+            icon={<ImUsers/>}
           />
         </Col>
         <Col sm="6" lg="3">
