@@ -146,7 +146,8 @@ hide : {
     default: true
   },
   status: {
-    type: Number, default: 0
+    type: Number,
+     default: 0
   },
   adharBack:{
     type:String

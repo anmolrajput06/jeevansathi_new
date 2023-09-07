@@ -10,6 +10,8 @@ router.get('/getalluser',listontroller.getAllUser)
 router.post('/get_user_id',listontroller.get_particularUser)
 router.post('/hidestatus/update',listontroller.hidestatusUpdate)
 router.post('/user/delete',listontroller.oneUserDelete)
-
+router.post('/block/user',listontroller.activestatusUpdate)
+router.post('/remove_intrested_user',listontroller.remove_interested_user)
+router.get('/get_block',listontroller.get_block_unblock)
 
 module.exports = router;

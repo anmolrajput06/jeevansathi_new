@@ -51,7 +51,7 @@ const ProjectTables = () => {
   const [offset, setOffset] = useState(0);
   const [viewAll, setViewAll] = useState(false);
   const [getrefresh, setrefresh] = useState(false);
-  const [usercount,setUsercount]=useState(0)
+  const [usercount, setUsercount] = useState(0)
 
 
   useEffect(() => {
@@ -59,7 +59,6 @@ const ProjectTables = () => {
     axios.get("http://localhost:3002/get_List/getalluser")
       .then(response => {
         setTableData(response.data); // Update state with fetched data
-        console.log(response.data.length,'0000');
         setUsercount(response.data.length)
       })
       .catch(error => {
@@ -78,7 +77,6 @@ const ProjectTables = () => {
   const handleViewAllClick = () => {
     setViewAll(true);
   };
-console.log(usercount,'0------------------0');
   const setToggleSwitch = (e, userData) => {
     console.log("e", e);
     console.log("data", userData);
@@ -150,7 +148,7 @@ console.log(usercount,'0------------------0');
     let data = JSON.stringify({
       "user": user_id
     });
-    console.log(data, "64e83e83001976c90c48651c");
+    console.log(user_id == "64f5cc3e2ff69df8ad16cfa6");
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
@@ -160,8 +158,10 @@ console.log(usercount,'0------------------0');
       },
       data: data
     };
+
     axios.request(config)
       .then((response) => {
+        console.log(response.data, '-----');
         setResponseItems(response.data);
         setModalIsOpen(true);
 
@@ -251,27 +251,27 @@ console.log(usercount,'0------------------0');
                     </Link>
                   </td> */}
                   <td> {tdata.active === false ? (
-                        <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
-                      ) : tdata.status === true ? (
-                        <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
-                      ) : (
-                        <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
-                      )}</td>
+                    <span className="p-2 bg-danger rounded-circle d-inline-block ms-3"></span>
+                  ) : tdata.status === true ? (
+                    <span className="p-2 bg-warning rounded-circle d-inline-block ms-3"></span>
+                  ) : (
+                    <span className="p-2 bg-success rounded-circle d-inline-block ms-3"></span>
+                  )}</td>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
 
-                     
+
                       <div>
                         <Link to={`/useredit/${tdata._id}`}>
                           <BiSolidEditAlt />
                         </Link>
 
                         <span className="btn btn-md" onClick={() => { deleteUser(tdata._id); }}> <AiFillDelete /></span>
-                    
+
                         <Link to={`/userdetails/${tdata._id}`}>
-                      <BiShow />
-                    </Link>
-                    
+                          <BiShow />
+                        </Link>
+
                       </div>
 
                     </div>
@@ -297,7 +297,6 @@ console.log(usercount,'0------------------0');
         </CardBody>
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={modalStyles}>
           <h2 style={{ textAlign: 'center' }}> Intrested  List</h2>
-          {/* {/ {responseItems.map((item, index) => ( /}
           <>
 
             <table>
@@ -323,10 +322,8 @@ console.log(usercount,'0------------------0');
               </tbody>
             </table>
 
-       
 
           </>
-          {/ ))} /} */}
           <button onClick={closeModal} style={buttonStyles}>
             Close
           </button>

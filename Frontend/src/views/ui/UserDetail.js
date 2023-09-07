@@ -13,10 +13,10 @@ const UserDetail = () => {
     const id = useParams();
     // const userId = useParams();
 
-    console.log("id =>", id);
+
     const [empdata, empdatachange] = useState([]);
     const [imageUrl, setImageUrl] = useState("");
- 
+
     const handleGetUser = async () => {
         try {
             const response = await axios.post(`${host}/get_List/get_user_id`, { userId: id.id });
@@ -33,7 +33,6 @@ const UserDetail = () => {
     const LoadEdit = () => {
         navigate(`/forms/${id.id}`);
     };
-    console.log(imageUrl,'imageUrl');
     const Removefunction = () => {
         Swal.fire({
             title: "Are you sure?",
@@ -61,9 +60,46 @@ const UserDetail = () => {
             }
         });
     };
-    console.log('empdata', empdata);
+    // console.log(empdata.);
+    const active_status_update = (user_id, current_active_status) => {
 
+        console.log("current_active_status", current_active_status);
 
+        const new_active_status = !current_active_status
+        let data = JSON.stringify({
+            "user_id": user_id,
+            "active_status": new_active_status
+        });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://localhost:3002/get_List/block/user',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+                if (response.data.message == "Status updated successfully") {
+                    const successText = empdata.active ? "User Successfully Blocked" : "User Successfully Unblocked";
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Successful",
+                        text: successText,
+                    }).then(() => {
+                        navigate("/table");
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
 
     // Use useEffect to call the API when the component mounts
     useEffect(() => {
@@ -71,11 +107,7 @@ const UserDetail = () => {
         handleGetUser()
     }, [])
 
-
     return (<>
-
-
-
 
         <div className="mt-3" >
             {/* <div className="card"> */}
@@ -85,14 +117,16 @@ const UserDetail = () => {
             {empdata && (
                 <div className="card mt-5">
                     <div className="container mt-3">
-                    {/* {imageUrl && ( */}
-                                <div className="col-12 col-md-6 col-lg-3">
-                                    <label className="pmd-list-subtitle">Profile Picture</label>
-                                    <img src={imageUrl} alt="Profile" style={{ maxWidth: '100px' }} />
-                                </div>
-                            {/* )} */}
+                        {/* {imageUrl && ( */}
+                        <div className="col-12 col-md-6 col-lg-3">
+                            <label className="pmd-list-subtitle">Profile Picture</label>
+                            <img src={imageUrl} alt="Profile" style={{ maxWidth: '100px' }} />
+                        </div>
+                        {/* )} */}
                         <div className="row view-basic-card">
+
                             <h3 className="card-title media-body mb-4" style={{ color: '#3075BA' }}>Basic Information</h3>
+
                             <div className="col-12 col-md-6 col-lg-3">
                                 <label className="pmd-list-subtitle">First Name</label>
                                 <p className="pmd-list-title"><small>{empdata.candidates_name}</small></p>
@@ -102,6 +136,8 @@ const UserDetail = () => {
                                 <small>{empdata.surname
                                 }</small>
                             </div>
+
+
                             <div className="col-12 col-md-6 col-lg-3">
                                 <label className="pmd-list-subtitle">Work</label>
                                 <p className="pmd-list-title">{empdata.work}</p>
@@ -162,7 +198,7 @@ const UserDetail = () => {
                                 <label className="pmd-list-subtitle">About Your Future Carrer</label>
                                 <p className="pmd-list-title"><small>{empdata.about_your_future_carrer}</small></p>
                             </div>
-                       
+
                         </div>
                         <hr />
 
@@ -201,7 +237,17 @@ const UserDetail = () => {
                                 <label className="pmd-list-subtitle">Family Type</label>
                                 <p className="pmd-list-title"><small>{empdata.family_type}</small></p>
                             </div>
-                          </div>
+
+                        </div>
+
+                        <div className="col-12 col-md-6 col-lg-3">
+                            {empdata.active ? (
+                                <button onClick={() => active_status_update(empdata._id, empdata.active)}>Block</button>
+                            ) : (
+                                <button onClick={() => active_status_update(empdata._id, empdata.active)}>Unblock</button>
+                            )}
+                        </div>
+
                     </div>
                 </div>
             )}
