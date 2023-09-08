@@ -97,7 +97,7 @@ import {
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'http://localhost:3002/auth/updateUser',
+        url: `${host}/auth/updateUser`,
         headers: {
           'Content-Type': 'application/json'
         },

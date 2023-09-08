@@ -11,7 +11,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
-
+import host from "../../views/ui/utils";
 // import { useTable } from 'react-table';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -56,7 +56,7 @@ const ProjectTables = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get("http://localhost:3002/get_List/getalluser")
+    axios.get(`${host}/get_List/getalluser`)
       .then(response => {
         setTableData(response.data); // Update state with fetched data
         setUsercount(response.data.length)
@@ -89,7 +89,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/hidestatus/update',
+      url: `${host}/get_List/hidestatus/update`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -117,7 +117,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/user/delete',
+      url: `${host}/get_List/user/delete`,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -152,7 +152,7 @@ const ProjectTables = () => {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3002/get_List/intreted_user',
+      url: `${host}/get_List/intreted_user`,
       headers: {
         'Content-Type': 'application/json'
       },

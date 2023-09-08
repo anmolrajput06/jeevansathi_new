@@ -74,7 +74,7 @@ const UserDetail = () => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:3002/get_List/block/user',
+            url: `${host}/get_List/block/user`,
             headers: {
                 'Content-Type': 'application/json'
             },
