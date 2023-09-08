@@ -9,7 +9,7 @@ const signUpRoute = require('./routes/sing.route');
 const List= require('./routes/list.route')
 const Event= require('./routes/Event.route')
 const Contact = require('./routes/Contact.route')
-
+const Job= require('./routes/Job.route')
 // Load environment variables from .env file
 dotenv.config();
 const bodyParser = require('body-parser');
@@ -74,6 +74,7 @@ app.use('/auth', signUpRoute); // Assuming the signup route is under '/auth'
 app.use('/get_List',List)
 app.use('/Event',Event)
 app.use('/contact',Contact)
+app.use('/job',Job)
 // Start the server
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
